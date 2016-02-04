@@ -1,0 +1,19 @@
+{
+  "name": "webscienceproject",
+  "version": "1.0.0",
+  "description": "A health conscious grocery list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rickrizzo/WebScienceProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rickrizzo/WebScienceProject/issues"
+  },
+  "homepage": "https://github.com/rickrizzo/WebScienceProject#readme"
+}
