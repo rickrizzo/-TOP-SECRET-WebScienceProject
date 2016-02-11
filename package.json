@@ -1,5 +1,5 @@
 {
-  "name": "webscienceproject",
+  "name": "GroGro",
   "version": "1.0.0",
   "description": "A health conscious grocery list",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/rickrizzo/WebScienceProject.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rickrizzo/WebScienceProject/issues"
   },
