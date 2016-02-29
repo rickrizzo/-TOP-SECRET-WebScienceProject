@@ -18,6 +18,7 @@ body {
 
 /** Main **/
 main {
+  text-align: center;
   margin: 1em;
 }
 
@@ -47,15 +48,17 @@ nav a:hover {
   background-color: #00B7FF;
 }
 .active:hover {
-  color: black;
+  color: white;
   background-color: #00B7FF;
+  cursor: default;
 }
 .nav-right .active {
   background-color: #00FF95;
 }
 .nav-right .active:hover {
-  color: black;
+  color: white;
   background-color: #00FF95;
+  cursor: default;
 }
 nav ul.nav-right {
   float: right;
