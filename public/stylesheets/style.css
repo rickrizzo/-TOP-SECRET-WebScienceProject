@@ -40,6 +40,9 @@ nav a:hover {
 .active {
   background-color: #00B7FF;
 }
+ul.nav-right .active {
+  background-color: #00FF95;
+}
 nav ul.nav-right {
   float: right;
   list-style: none;
