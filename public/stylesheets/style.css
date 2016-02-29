@@ -1,8 +1,46 @@
+/* CSS Table of Contents */
+/* Body
+ * Navigation
+ * Links and Text
+*/
+
+/** Body **/
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+/** Navigation **/
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  color: white;
+  background-color: black;
+}
+nav li {
+  float: left;
+}
+nav a {
+  padding: 1em;
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+nav a:hover {
+  background-color: white;
+  color: black;
+}
+.active {
+  background-color: #00B7FF;
+}
+nav ul.nav-right {
+  float: right;
+  list-style: none;
+}
+
+/** Links and Text **/
 a {
   color: #00B7FF;
 }
