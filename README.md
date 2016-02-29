@@ -1,2 +1,2 @@
-# -TOP-SECRET-WebScienceProject
+# GRO GRO
 A health conscious grocery list
