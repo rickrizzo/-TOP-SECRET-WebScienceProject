@@ -6,8 +6,12 @@
 
 /** Body **/
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+@media (min-width: 768px) {
+  body {
+    padding: 50px;
+  }
 }
 
 /** Navigation **/
