@@ -1,5 +1,6 @@
 /* CSS Table of Contents */
 /* Body
+ * Main
  * Navigation
  * Links and Text
 */
@@ -13,6 +14,11 @@ body {
   body {
     padding: 50px;
   }
+}
+
+/** Main **/
+main {
+  margin: 1em;
 }
 
 /** Navigation **/
@@ -40,7 +46,15 @@ nav a:hover {
 .active {
   background-color: #00B7FF;
 }
-ul.nav-right .active {
+.active:hover {
+  color: black;
+  background-color: #00B7FF;
+}
+.nav-right .active {
+  background-color: #00FF95;
+}
+.nav-right .active:hover {
+  color: black;
   background-color: #00FF95;
 }
 nav ul.nav-right {

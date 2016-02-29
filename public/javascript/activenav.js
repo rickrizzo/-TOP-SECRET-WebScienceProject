@@ -6,7 +6,7 @@ Array.prototype.slice.call(document.getElementsByTagName('nav')[0].getElementsBy
 // Toggle Class
 function toggleActive() {
   if(this.classList.contains('active') === false) {
-    document.getElementsByClassName('active')[0].className = '';
-    this.className = 'active';
+    document.getElementsByClassName('active')[0].classList.remove('active');
+    this.classList.add('active');
   }
 }
