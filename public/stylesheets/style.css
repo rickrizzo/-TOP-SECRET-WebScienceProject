@@ -1,13 +1,24 @@
 /* CSS Table of Contents */
 /* Body
+ * Main
  * Navigation
  * Links and Text
 */
 
 /** Body **/
 body {
-  padding: 50px;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+@media (min-width: 768px) {
+  body {
+    padding: 50px;
+  }
+}
+
+/** Main **/
+main {
+  margin: 1em;
 }
 
 /** Navigation **/
@@ -34,6 +45,17 @@ nav a:hover {
 }
 .active {
   background-color: #00B7FF;
+}
+.active:hover {
+  color: black;
+  background-color: #00B7FF;
+}
+.nav-right .active {
+  background-color: #00FF95;
+}
+.nav-right .active:hover {
+  color: black;
+  background-color: #00FF95;
 }
 nav ul.nav-right {
   float: right;
