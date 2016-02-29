@@ -2,6 +2,27 @@ doctype html
 html
   head
     title= title
+
+    // CSS
     link(rel='stylesheet', href='/stylesheets/style.css')
+
   body
+
+    // Navigation
+    nav
+      ul
+        li
+          a(href= "#").active Home
+        li
+          a(href= "#") Lists
+        ul.nav-right
+          li
+            a(href= "#") About
+          li
+            a(href= "#") Login
+
+    // Main
     block content
+
+    // Scripts
+    script(src= '/modules/jquery/dist/jquery.min.js')
