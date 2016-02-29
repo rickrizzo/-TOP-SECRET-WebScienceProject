@@ -6,6 +6,7 @@
 
 /** Body **/
 body {
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 @media (min-width: 768px) {
