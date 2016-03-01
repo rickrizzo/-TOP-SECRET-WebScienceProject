@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { 
     title: 'Gro Gro',
     jquery: '/modules/jquery/dist/jquery.min.js',
-    scripts: ['javascript/activenav.js'] 
+    scripts: ['javascript/activenav.js', 'javascript/getfood.js'] 
   });
 });
 
