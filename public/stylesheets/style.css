@@ -44,21 +44,33 @@ nav a:hover {
   background-color: white;
   color: black;
 }
-.active {
-  background-color: #00B7FF;
-}
 .active:hover {
   color: white;
+  cursor: default;
+}
+#home.active {
   background-color: #00B7FF;
-  cursor: default;
 }
-.nav-right .active {
+#home.active:hover {
+  background-color: #00B7FF;
+}
+#lists.active{
+  background-color: #FF003B
+}
+#lists.active:hover {
+  background-color: #FF003B;
+}
+#about.active {
   background-color: #00FF95;
 }
-.nav-right .active:hover {
-  color: white;
+#about.active:hover {
   background-color: #00FF95;
-  cursor: default;
+}
+#login.active {
+  background-color: #A900FF;
+}
+#login.active:hover {
+  background-color: #A900FF;
 }
 nav ul.nav-right {
   float: right;
