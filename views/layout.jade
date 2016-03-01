@@ -1,9 +1,8 @@
 doctype html
 html
   head
+    meta(name= 'viewport', content= 'width=device-width, initial-scale=1.0')
     title= title
-
-    // CSS
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
@@ -12,18 +11,18 @@ html
     nav
       ul
         li
-          a(href= "#").active Home
+          a(href= '#').active Home
         li
-          a(href= "#") Lists
+          a(href= '#') Lists
         ul.nav-right
           li
-            a(href= "#") About
+            a(href= '#') About
           li
-            a(href= "#") Login
+            a(href= '#') Login
 
     // Main
     block content
 
     // Scripts
     script(type='text/javascript', src= jquery)
-    script(type='text/javascript', src= scripts[0])
+    script(type='text/javascript', src= scripts)
