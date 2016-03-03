@@ -1,11 +1,12 @@
 doctype html
-html
+html(ng-app="GroGro")
   head
     meta(name= 'viewport', content= 'width=device-width, initial-scale=1.0')
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/modules/bootstrap/dist/css/bootstrap.css')
 
-  body
+  body(ng-controller="Controller")
 
     // Navigation
     nav
@@ -23,5 +24,8 @@ html
     // Main
     block content
 
-    script(type='text/javascript', src= jquery)
-    script(type='text/javascript', src= scripts[0])
+    script(type='text/javascript', src= "/modules/jquery/dist/jquery.min.js")
+    script(type='text/javascript', src= "/modules/bootstrap/dist/js/bootstrap.min.js")
+    script(type='text/javascript', src= "/modules/angular/angular.min.js")
+
+    script(type='text/javascript', src= "javascript/activenav.js")

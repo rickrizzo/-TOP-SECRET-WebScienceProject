@@ -3,11 +3,11 @@ extends layout
 block content
     h1= title
     p Welcome to #{title}, the app that adds value to your groceries.
-    form
-      input(type= "text")
-      input(type= "submit" value="Search")
 
-    p #{oreos}
-  // Scripts
-  script(type='text/javascript', src= scripts[0])
+    div(class="input-group" id="query-div")
+      input(class="form-control" id="query-input" type="text" name="input" ng-model="input.text")
+      span(class="input-group-btn")
+        button(class="btn btn-default" type="button" id="search" ng-click="search()") Search
+
+    {{test}}    
 
