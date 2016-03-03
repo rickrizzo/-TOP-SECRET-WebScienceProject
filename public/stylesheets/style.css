@@ -1,5 +1,6 @@
 /* CSS Table of Contents */
 /* Body
+ * Main
  * Navigation
  * Links and Text
 */
@@ -13,6 +14,12 @@ body {
   body {
     padding: 50px;
   }
+}
+
+/** Main **/
+main {
+  text-align: center;
+  margin: 1em;
 }
 
 /** Navigation **/
@@ -37,8 +44,33 @@ nav a:hover {
   background-color: white;
   color: black;
 }
-.active {
+.active:hover {
+  color: white;
+  cursor: default;
+}
+#home.active {
   background-color: #00B7FF;
+}
+#home.active:hover {
+  background-color: #00B7FF;
+}
+#lists.active{
+  background-color: #FF003B
+}
+#lists.active:hover {
+  background-color: #FF003B;
+}
+#about.active {
+  background-color: #00FF95;
+}
+#about.active:hover {
+  background-color: #00FF95;
+}
+#login.active {
+  background-color: #A900FF;
+}
+#login.active:hover {
+  background-color: #A900FF;
 }
 nav ul.nav-right {
   float: right;

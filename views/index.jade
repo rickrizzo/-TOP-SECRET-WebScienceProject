@@ -1,6 +1,7 @@
 extends layout
 
 block content
+<<<<<<< HEAD
   h1= title
   p Welcome to #{title}, the app that adds value to your groceries.
   form
@@ -10,3 +11,13 @@ block content
   p #{request}
 
   
+=======
+  main
+    h1= title
+    p Welcome to #{title}, the app that adds value to your groceries.
+    form
+      input(type= "text")
+      input(type= "submit" value="Search")
+  // Scripts
+  script(type='text/javascript', src= scripts[1])
+>>>>>>> 312befecac1098eefc6b789a2ef676daf971f1b0
