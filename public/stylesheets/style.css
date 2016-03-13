@@ -1,28 +1,46 @@
 /* CSS Table of Contents */
 /* Body
  * Main
+ * Header
  * Navigation
+   * Active
  * Links and Text
 */
 
 /** Body **/
 body {
   margin: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 @media (min-width: 768px) {
   body {
-    padding: 50px;
+    padding: 0 50px;
   }
 }
 
 /** Main **/
 main {
+}
+
+/** Header **/
+header {
   text-align: center;
-  margin: 1em;
+  background-color: #00B7FF;
+  color: white;
+  height: 50%;
+}
+header h1 {
+  font-size: 5em;
+  margin: 0;
+  padding-top: 0.75em;
+}
+header p {
 }
 
 /** Navigation **/
+nav {
+  font-size: 14px;
+}
 nav ul {
   list-style: none;
   padding: 0;
@@ -44,37 +62,28 @@ nav a:hover {
   background-color: white;
   color: black;
 }
+nav ul.nav-right {
+  float: right;
+  list-style: none;
+}
+
+/* Active Elements */
 .active:hover {
   color: white;
   cursor: default;
 }
-#home.active {
+#home.active, #home.active:hover {
   background-color: #00B7FF;
 }
-#home.active:hover {
-  background-color: #00B7FF;
-}
-#lists.active{
+#lists.active, #lists.active:hover{
   background-color: #FF003B
 }
-#lists.active:hover {
-  background-color: #FF003B;
-}
-#about.active {
+#about.active, #about.active:hover {
   background-color: #00FF95;
 }
-#about.active:hover {
-  background-color: #00FF95;
-}
-#login.active {
+
+#login.active, #login.active:hover {
   background-color: #A900FF;
-}
-#login.active:hover {
-  background-color: #A900FF;
-}
-nav ul.nav-right {
-  float: right;
-  list-style: none;
 }
 
 /** Links and Text **/

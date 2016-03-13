@@ -10,9 +10,8 @@ router.get('/', function(req, res, next) {
 	    console.log(data["list"]["q"]);
 	    res.render('index', { 
 				title: 'Gro Gro',
-			  jquery: '/modules/jquery/dist/jquery.min.js',
 			  angular: '/modules/angular/angular.min.js',
-				scripts: ['javascript/activenav.js', 'javascript/getfood.js'] 
+			  app: 'javascript/grogroapp.js'
 			});
 		}
 	});
