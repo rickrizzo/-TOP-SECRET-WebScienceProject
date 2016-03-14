@@ -1,9 +1,11 @@
 // Table of Contents
 /** Dimensions
   * Colors
+  * Color Classes
   * Body
   * Header
   * Navigation
+  * Forms
 */
 
 // Dimentions
@@ -16,6 +18,20 @@ $home: #00B7FF;
 $lists: #FF003B;
 $about: #00FF95;
 $login: #A900FF;
+
+// Color Classes
+.home {
+	background-color: $home;
+}
+.lists {
+	background-color: $lists;
+}
+.about {
+	background-color: $about;
+}
+.login {
+	background-color: $login;
+}
 
 // Body
 body {
@@ -33,18 +49,6 @@ header {
 		font-size: 5em;
 		margin: 0;
 		padding-top: 0.75em;
-	}
-	&#home {
-		background-color: $home;
-	}
-	&#lists {
-		background-color: $lists;
-	}
-	&#about {
-		background-color: $about;
-	}
-	&#login {
-		background-color: $login;
 	}
 }
 
@@ -100,6 +104,26 @@ nav {
 	#login {
 		&.active, &.active:hover {
 			background-color: $login;
+		}
+	}
+}
+
+// Forms
+form {
+	padding: 1em 0;
+	text-align: center;
+	input {
+		border: none;
+		line-height: 3em;
+		&:focus {
+			outline: none;
+		}
+		&[type=text] {
+			box-sizing: border-box;
+		}
+		&[type=submit] {
+			background-color: black;
+			color: white;
 		}
 	}
 }
