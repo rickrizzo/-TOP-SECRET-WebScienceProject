@@ -11,13 +11,20 @@ body {
 
 header {
   text-align: center;
-  background-color: #00B7FF;
   color: white;
   height: 50%; }
   header h1 {
     font-size: 5em;
     margin: 0;
     padding-top: 0.75em; }
+  header#home {
+    background-color: #00B7FF; }
+  header#lists {
+    background-color: #FF003B; }
+  header#about {
+    background-color: #00FF95; }
+  header#login {
+    background-color: #A900FF; }
 
 nav {
   font-size: 14px; }
