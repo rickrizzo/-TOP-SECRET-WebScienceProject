@@ -2,6 +2,7 @@ doctype html
 html
   head
     meta(name= 'viewport', content= 'width=device-width, initial-scale=1.0')
+    base(href='/')
     title= title
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:400,700')
     link(rel='stylesheet', href='/css/main.css')
@@ -22,8 +23,10 @@ html
             a(href= '#' ng-class='{"active": selected === "login"}' ng-click='selected = "login"')#login Login
 
     // Main
-    block content
+    div(ng-view)
 
     // Scripts
     script(type='text/javascript', src= angular)
+    script(type='text/javascript', src= modules)
     script(type='text/javascript', src= app)
+    script(type='text/javascript', src= controllers)
