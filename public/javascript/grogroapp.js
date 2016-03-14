@@ -1,1 +1,1 @@
-var app = angular.module('grogro', []);
+var app = angular.module('grogro', ['ngRoute']);

@@ -1,2 +1,54 @@
+/** Dimensions
+  * Colors
+  * Body
+  * Header
+  * Navigation
+*/
 body {
-  margin: 0; }
+  margin: 0 auto;
+  font-family: 'Open Sans', sans-serif;
+  max-width: 1000px; }
+
+header {
+  text-align: center;
+  background-color: #00B7FF;
+  color: white;
+  height: 50%; }
+  header h1 {
+    font-size: 5em;
+    margin: 0;
+    padding-top: 0.75em; }
+
+nav {
+  font-size: 14px; }
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    color: white;
+    background-color: black; }
+    nav ul.nav-right {
+      float: right;
+      list-style: none; }
+  nav li {
+    float: left; }
+  nav a {
+    padding: 1em;
+    display: block;
+    color: white;
+    text-decoration: none; }
+    nav a:hover {
+      background-color: white;
+      color: black; }
+  nav .active:hover {
+    color: white;
+    cursor: default; }
+  nav #home.active, nav #home.active:hover {
+    background-color: #00B7FF; }
+  nav #lists.active, nav #lists.active:hover {
+    background-color: #FF003B; }
+  nav #about.active, nav #about.active:hover {
+    background-color: #00FF95; }
+  nav #login.active, nav #login.active:hover {
+    background-color: #A900FF; }
