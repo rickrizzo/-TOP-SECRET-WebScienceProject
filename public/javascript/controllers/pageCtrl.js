@@ -24,6 +24,3 @@ app.config(function($routeProvider, $locationProvider) {
     redirectTo: 'partials/error'
   });
 });
-
-
-

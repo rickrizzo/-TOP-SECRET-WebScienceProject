@@ -10,11 +10,18 @@ router.get('/', function(req, res, next) {
 	    console.log(data["list"]["q"]);
 		}
 	});*/
-	res.render('layout', { 
+	res.render('layout', {
+		title: 'Gro Gro',
 		angular: '/modules/angular/angular.min.js',
 		modules: '/modules/angular-route/angular-route.min.js',
 		app: 'javascript/grogroapp.js',
-		controllers: 'javascript/controllers/pageCtrl.js'
+		controllers: [
+			'javascript/controllers/pageCtrl.js', 
+			'javascript/controllers/aboutCtrl.js', 
+			'javascript/controllers/homeCtrl.js', 
+			'javascript/controllers/listCtrl.js', 
+			'javascript/controllers/loginCtrl.js', 
+			'javascript/controllers/navCtrl.js']
 	});
 });
 

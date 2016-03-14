@@ -1,9 +1,23 @@
 /** Dimensions
   * Colors
+  * Color Classes
   * Body
   * Header
   * Navigation
+  * Forms
 */
+.home {
+  background-color: #00B7FF; }
+
+.lists {
+  background-color: #FF003B; }
+
+.about {
+  background-color: #00FF95; }
+
+.login {
+  background-color: #A900FF; }
+
 body {
   margin: 0 auto;
   font-family: 'Open Sans', sans-serif;
@@ -17,14 +31,6 @@ header {
     font-size: 5em;
     margin: 0;
     padding-top: 0.75em; }
-  header#home {
-    background-color: #00B7FF; }
-  header#lists {
-    background-color: #FF003B; }
-  header#about {
-    background-color: #00FF95; }
-  header#login {
-    background-color: #A900FF; }
 
 nav {
   font-size: 14px; }
@@ -59,3 +65,17 @@ nav {
     background-color: #00FF95; }
   nav #login.active, nav #login.active:hover {
     background-color: #A900FF; }
+
+form {
+  padding: 1em 0;
+  text-align: center; }
+  form input {
+    border: none;
+    line-height: 3em; }
+    form input:focus {
+      outline: none; }
+    form input[type=text] {
+      box-sizing: border-box; }
+    form input[type=submit] {
+      background-color: black;
+      color: white; }
