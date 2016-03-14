@@ -27,13 +27,24 @@ body {
 // Header
 header {
 	text-align: center;
-	background-color: $home;
 	color: white;
 	height: 50%;
 	h1 {
 		font-size: 5em;
 		margin: 0;
 		padding-top: 0.75em;
+	}
+	&#home {
+		background-color: $home;
+	}
+	&#lists {
+		background-color: $lists;
+	}
+	&#about {
+		background-color: $about;
+	}
+	&#login {
+		background-color: $login;
 	}
 }
 

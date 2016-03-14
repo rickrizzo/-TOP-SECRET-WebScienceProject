@@ -11,7 +11,6 @@ router.get('/', function(req, res, next) {
 		}
 	});*/
 	res.render('layout', { 
-		title: 'Gro Gro',
 		angular: '/modules/angular/angular.min.js',
 		modules: '/modules/angular-route/angular-route.min.js',
 		app: 'javascript/grogroapp.js',
@@ -21,7 +20,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/partials/:name', function(req, res, next) {
 	var name = req.params.name;
-	res.render(name);
+	res.render(name, {
+		title: 'Gro Gro'
+	});
 });
 
 module.exports = router;
