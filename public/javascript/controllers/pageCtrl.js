@@ -20,6 +20,9 @@ app.config(function($routeProvider, $locationProvider) {
   }).when('/login', {
     templateUrl: 'partials/login',
     controller: 'loginCtrl'
+  }).when('/login/facebook', {
+    templateUrl: 'login/facebook',
+    controller: 'loginCtrl'
   }).otherwise({
     redirectTo: 'partials/error'
   });
