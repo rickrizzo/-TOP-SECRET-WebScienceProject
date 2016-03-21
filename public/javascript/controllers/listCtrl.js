@@ -6,9 +6,9 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   $scope.search = function() {
   	console.log("getting information from api");
     var food = $scope.query.text;
-  	$http.get("/api/get_nutrition/" + food).then(function(response) {
+  	$http.get("/api/get_food/" + food).then(function(response) {
   	  console.log(response.data);
-      $scope.names = response.data.names
+      $scope.names = response.data;
     });
   };
 });
