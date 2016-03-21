@@ -13,7 +13,7 @@ router.get('/get_nutrition/:food', function(req, res, next) {
   var return_data = {};
   var data = null;
 
-  request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + food + '&sort=n&max=25&offset=0&api_key=DEMO_KEY', function (error, res1, body) {
+  request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + food + '&sort=n&offset=0&api_key=DEMO_KEY', function (error, res1, body) {
     if (!error && res1.statusCode == 200) {
       data = JSON.parse(res1.body);
       for (var item in data.list.item) {
