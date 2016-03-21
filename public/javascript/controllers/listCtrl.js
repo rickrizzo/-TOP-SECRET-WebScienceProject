@@ -4,10 +4,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   $scope.params = $routeParams;
   
   $scope.search = function() {
-  	console.log("getting information from api");
-    var food = $scope.query.text;
-  	$http.get("/api/get_food/" + food).then(function(response) {
-  	  console.log(response.data);
+  	$http.get("/api/get_food/" + $scope.query.text).then(function(response) {
       $scope.names = response.data;
     });
   };
