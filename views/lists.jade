@@ -1,7 +1,7 @@
 div(ng-controller="listCtrl")
   form.lists
+    h2 What are you going to eat?
     input(type='text' ng-model='query.text')
-    button(ng-click='search()') Search
-
-  div(ng-repeat="(name, id) in names")
-    {{name}} : {{id}}
+    button(ng-click='getFood()') Search
+  ul.results(ng-repeat="(name, id) in names")
+    li {{name}} : {{id}}

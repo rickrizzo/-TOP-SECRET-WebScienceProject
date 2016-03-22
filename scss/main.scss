@@ -5,7 +5,9 @@
   * Body
   * Header
   * Navigation
+  * Buttons
   * Forms
+  * Search Results
 */
 
 // Dimentions
@@ -16,20 +18,24 @@ $ultrawide: 1200px;
 // Colors
 $home: #00B7FF;
 $lists: #FF003B;
-$about: #00FF95;
+$about: #07E842;
 $login: #A900FF;
 
 // Color Classes
 .home {
+	color: white;
 	background-color: $home;
 }
 .lists {
+	color: white;
 	background-color: $lists;
 }
 .about {
+	color: white;
 	background-color: $about;
 }
 .login {
+	color: white;
 	background-color: $login;
 }
 
@@ -43,7 +49,6 @@ body {
 // Header
 header {
 	text-align: center;
-	color: white;
 	height: 50%;
 	h1 {
 		font-size: 5em;
@@ -108,22 +113,40 @@ nav {
 	}
 }
 
+// Buttons
+button {
+	color: white;
+	background-color: black;
+	border: none;
+	line-height: 2em;
+	font-size: 1em;
+}
+
 // Forms
 form {
 	padding: 1em 0;
 	text-align: center;
+	h2 {
+		font-size: 2em;
+	}
 	input {
-		border: none;
-		line-height: 3em;
+		border: white 1px solid;
+		line-height: 2em;
 		&:focus {
 			outline: none;
 		}
 		&[type=text] {
 			box-sizing: border-box;
+			width: 20em;
+			font-size: 1em;
 		}
-		&[type=submit] {
-			background-color: black;
-			color: white;
-		}
+	}
+}
+
+// Search Results
+ul.results {
+	list-style: none;
+	li {
+		border: 2px solid black;
 	}
 }
