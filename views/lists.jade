@@ -3,5 +3,5 @@ div(ng-controller="listCtrl")
     h2 What are you going to eat?
     input(type='text' ng-model='query.text')
     button(ng-click='getFood()') Search
-  ul.results(ng-repeat="(name, id) in names")
-    li {{name}} : {{id}}
+  ul.results(ng-repeat="(name, id) in names track by $index")
+    li(ng-click='getNutrition(id)'){{name}} : {{id}}

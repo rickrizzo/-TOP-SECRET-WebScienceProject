@@ -12,10 +12,9 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   };
 
   // Search Nutrition
-  $scope.getNutrition = function() {
-    var id = '123';
+  $scope.getNutrition = function(id) {
     $http.get("/api/get_nutrition/" + id).then(function(response) {
-      console.log(response);
+      console.log(response.data);
     });
   }
 });
