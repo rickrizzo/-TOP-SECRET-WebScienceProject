@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 
+// Get Food
 router.get('/get_food/:food', function(req, res, next) {
   var food = req.params.food;
   var return_data = {};
@@ -16,15 +17,13 @@ router.get('/get_food/:food', function(req, res, next) {
       res.send(return_data);
     }
     else {
-      res.send("Got error");
+      res.status(500).send("Invalid food query!");
     }
   });
 });
 
 router.get('/get_nutrition/:food_id', function(req, res, next) {
-  //console.log("getting food nutrition");
   var food = req.params.food_id;
-
   var interested = ["Energy", "Sugars, total", "Total lipid (fat)", "Carboydrate, by difference", "Fiber, total dietary"];
   var return_data = {};
 

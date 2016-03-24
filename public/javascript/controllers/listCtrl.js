@@ -24,6 +24,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
             id: response.data[food]
           });
       }
+    }, function(response) {
+      console.log(response);
     });
   };
 
