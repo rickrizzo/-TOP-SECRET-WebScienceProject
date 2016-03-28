@@ -14,6 +14,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   
   // Search Food
   $scope.getFood = function() {
+    $scope.entries.length = 0;
     var food = $scope.query.text;
   	$http.get("/api/get_food/" + food).then(function(response) {
       for(var food in response.data) {
@@ -23,6 +24,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
             id: response.data[food]
           });
       }
+    }, function(response) {
+      console.log(response);
     });
   };
 
@@ -31,13 +34,5 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     $http.get("/api/get_nutrition/" + id).then(function(response) {
       console.log(response.data);
     });
-  }
-});
-
-// Start pages correctly
-app.filter('pages', function() {
-  return function(input, start) {
-    start = +start;
-    return input.slice(start);
   }
 });

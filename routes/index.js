@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 			'javascript/controllers/homeCtrl.js', 
 			'javascript/controllers/listCtrl.js', 
 			'javascript/controllers/loginCtrl.js', 
-			'javascript/controllers/navCtrl.js']
+			'javascript/controllers/navCtrl.js'],
+		filters: ['javascript/filters/pageFilter.js']
 	});
 });
 
