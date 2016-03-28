@@ -21,6 +21,7 @@
     "isarray": "^1.0.0",
     "jade": "~1.11.0",
     "jquery": "^2.2.1",
+    "mongoose": "^4.4.10",
     "morgan": "~1.6.1",
     "process-nextick-args": "^1.0.6",
     "request": "^2.69.0",
