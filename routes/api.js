@@ -44,6 +44,11 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
   });
 });
 
+router.get('/add_list/:food', function(req, res, next) {
+  var list_name = req.params.list;
+  res.send('adds a food to the users list');
+});
+
 router.get('/get_list/:list', function(req, res, next) {
   var list_name = req.params.list;
   res.send('gets a users list');
