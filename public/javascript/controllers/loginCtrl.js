@@ -9,6 +9,8 @@ app.controller('loginCtrl', function($scope, $routeParams) {
 module.exports = {
 	create: function(req, res){
 		var user = new userModel({
+			fb_id: req.params.id,
+			name: req.params.name,
 			lists: []
 		});
 
@@ -18,6 +20,7 @@ module.exports = {
 			}
 			return res.json({
 				message: "saved",
+				_id = user.user_id
 			});
 		});
 	},
@@ -31,3 +34,4 @@ module.exports = {
 			return res.json(user);
 		});
 	}
+};

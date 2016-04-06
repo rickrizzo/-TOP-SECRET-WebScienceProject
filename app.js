@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
+var mongoose = require("mongoose");
+// unsure which non-localhost path to give
+//var db = mongoose.connect('mongodb://localhost:27017/GroGro');
+
 var routes = require('./routes/index');
 var api = require('./routes/api');
 
