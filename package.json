@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build-css": "./bin/build-css",
+    "watch-css": "./bin/watch-css"
   },
   "dependencies": {
     "angular": "^1.5.0",
@@ -19,6 +21,7 @@
     "isarray": "^1.0.0",
     "jade": "~1.11.0",
     "jquery": "^2.2.1",
+    "mongoose": "^4.4.10",
     "morgan": "~1.6.1",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",

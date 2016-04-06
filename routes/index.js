@@ -5,27 +5,6 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
-  // I think this is front end code and should be implemented in the public folder
-  /*var app = angular.module("GroGro", []);
-  app.controller('Controller', function($scope, $http) {
-    $scope.search = function() {
-      request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + $scope.input.text + '&sort=n&max=25&offset=0&api_key=' + references.API_KEY, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          var data = JSON.parse(body);
-          console.log(data);
-          //$scope.test = data[""][""]  
-        }
-      });
-    };
-  });
-	request('http://api.nal.usda.gov/ndb/search/?format=json&q=oreos&sort=n&max=25&offset=0&api_key=x0Ek3fBDERrmYdHdKhNZQmeH3L6JY17hYd1aYUCj', function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-	  	var data = JSON.parse(body);
-	    console.log(data["list"]["q"]);
-		}
-	});*/
-
   // Render Layout
 	res.render('layout', {
 		title: 'Gro Gro',
@@ -38,7 +17,8 @@ router.get('/', function(req, res, next) {
 			'javascript/controllers/homeCtrl.js', 
 			'javascript/controllers/listCtrl.js', 
 			'javascript/controllers/loginCtrl.js', 
-			'javascript/controllers/navCtrl.js']
+			'javascript/controllers/navCtrl.js'],
+		filters: ['javascript/filters/pageFilter.js']
 	});
 });
 
@@ -49,7 +29,5 @@ router.get('/partials/:name', function(req, res, next) {
 		title: 'Gro Gro'
 	});
 });
-
-
 
 module.exports = router;
