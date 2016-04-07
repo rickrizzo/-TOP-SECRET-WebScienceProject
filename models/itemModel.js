@@ -5,7 +5,14 @@ var ObjectId = Schema.ObjectId;
 var itemSchema = new Schema({
 	"item_id": ObjectId,
 	"api_id": String,
-	"name": String
+	"name": String,
+	"nutrition":{
+		"energy": String,
+		"sugars": String,
+		"fat": String,
+		"carbs": String,
+		"fiber": String
+	}
 });
 
 // I don't know what this does but it's similar to
