@@ -5,13 +5,25 @@ div(ng-controller="listCtrl")
     h2 What are you going to eat?
     input(type='text' ng-model='query.text')
     button(ng-click='getFood()') Search
-  
+
   // Search Results
-  ul.results(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize')
-    li(ng-click='getNutrition(entry.id)') {{ entry.food }}
-  
-  // Page Controls
-  div(ng-hide='numPages() == 0')
-    button(ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
-    span {{ currentPage + 1 }} / {{ numPages() }}
-    button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
+  section(id='results')
+    
+    // Page Controls
+    div(class='pagectrl' ng-hide='numPages() == 0')
+      button(ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
+      span {{ currentPage + 1 }} / {{ numPages() }}
+      button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
+    
+    // Search Results
+    ul(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize')
+      li(ng-click='getNutrition(entry.id)') {{ entry.food }}
+    
+    // Page Controls
+    div(class='pagectrl' ng-hide='numPages() == 0')
+      button(ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
+      span {{ currentPage + 1 }} / {{ numPages() }}
+      button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
+
+  // Chart
+  div(id="chart" class="chart")

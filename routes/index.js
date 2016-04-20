@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 	res.render('layout', {
 		title: 'Gro Gro',
 		angular: '/modules/angular/angular.min.js',
+		d3: '/modules/d3/d3.min.js',
 		modules: '/modules/angular-route/angular-route.min.js',
 		app: 'javascript/grogroapp.js',
 		controllers: [
@@ -24,8 +25,7 @@ router.get('/', function(req, res, next) {
 
 // Render Jade Partials
 router.get('/partials/:name', function(req, res, next) {
-	var name = req.params.name;
-	res.render(name, {
+	res.render(req.params.name, {
 		title: 'Gro Gro'
 	});
 });
