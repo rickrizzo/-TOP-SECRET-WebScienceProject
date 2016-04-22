@@ -103,12 +103,24 @@ form {
         form input[type=text] {
           width: 20em; } }
 
-ul.results {
+#results ul {
   list-style: none;
   margin: 1em;
   padding: 0; }
-  ul.results li {
+  #results ul li {
     background-color: #FF003B;
     color: white;
     line-height: 2em;
     padding: 1em; }
+
+#results div.pagectrl {
+  text-align: center;
+  margin: 1em 0; }
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white; }

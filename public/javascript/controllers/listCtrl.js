@@ -3,6 +3,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
+  $scope.data = [4, 8, 15, 16, 23, 42];
 
   // Pagination
   $scope.currentPage = 0;
@@ -35,4 +36,13 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
       console.log(response.data);
     });
   }
+
+  //Scale Widths
+  var x = d3.scale.linear().domain([0, d3.max($scope.data)]).range([0, 400]);
+
+  // Append Chart Bars
+  d3.select('.chart').selectAll("div")
+      .data($scope.data).enter().append("div")
+      .style("width", function(d) { return x(d) + "px"; })
+      .text(function(d) { return d; });
 });
