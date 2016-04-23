@@ -64,11 +64,15 @@ router.get('/del_list/:list', function(req, res, next) {
 });
 
 // Messenger Testing
-router.get('/webhook/', funciton(req, res, next) {
+router.get('/webhook/', function(req, res, next) {
   if (req.query['hub.verify_token'] === 'fancy_cashew') {
     res.send(req.query['hub.challenge']);
   }
   res.send('Error, wrong validation token');
+});
+
+router.post('/webhook/', function(req, res, next) {
+  messaging_events = req.body.entry[0].messaging;
 });
 
 module.exports = router;
