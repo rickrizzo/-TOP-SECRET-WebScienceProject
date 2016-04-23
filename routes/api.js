@@ -63,4 +63,12 @@ router.get('/del_list/:list', function(req, res, next) {
   res.send('deletes a users list');
 });
 
+// Messenger Testing
+router.get('/webhook/', funciton(req, res, next) {
+  if (req.query['hub.verify_token'] === 'fancy_cashew') {
+    res.send(req.query['hub.challenge']);
+  }
+  res.send('Error, wrong validation token');
+});
+
 module.exports = router;

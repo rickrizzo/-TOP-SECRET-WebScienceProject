@@ -133,9 +133,9 @@ form {
 	padding: 1em;
 	text-align: center;
 	h2 {
-		padding-top: 0.75em;
 		@media (min-width: $tablet) {
 			font-size: 2em;
+			padding-top: 0.75em;
 		}
 	}
 	input {
