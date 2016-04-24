@@ -17,13 +17,17 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   $scope.getFood = function() {
     $scope.entries.length = 0;
     var food = $scope.query.text;
-  	$http.get("/api/get_food/" + food).then(function(response) {
+  	$http.get('/api/get_food/' + food).then(function(response) {
       for(var food in response.data) {
-        $scope.entries.push(
+        $http.get('/api/get_nutrition/' + response.data[food]).then(function(nutrition) {
+          console.log(nutrition.data);
+          $scope.entries.push(
           { 
             food : food,
-            id: response.data[food]
+            id: response.data[food],
+            nutrition: nutrition.data
           });
+        })
       }
     }, function(response) {
       console.log(response);
@@ -31,18 +35,18 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   };
 
   // Search Nutrition
-  $scope.getNutrition = function(id) {
+  /*$scope.getNutrition = function(id) {
     $http.get("/api/get_nutrition/" + id).then(function(response) {
-      console.log(response.data);
+      return response.data;
     });
-  }
+  }*/
 
   //Scale Widths
   var x = d3.scale.linear().domain([0, d3.max($scope.data)]).range([0, 400]);
 
   // Append Chart Bars
-  d3.select('.chart').selectAll("div")
-      .data($scope.data).enter().append("div")
-      .style("width", function(d) { return x(d) + "px"; })
+  d3.select('.chart').selectAll('div')
+      .data($scope.data).enter().append('div')
+      .style("width", function(d) { return x(d) + 'px'; })
       .text(function(d) { return d; });
 });

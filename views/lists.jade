@@ -17,7 +17,12 @@ div(ng-controller="listCtrl")
     
     // Search Results
     ul(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize')
-      li(ng-click='getNutrition(entry.id)') {{ entry.food }}
+      li {{ entry.food }}
+        section
+          span Calories {{ entry.nutrition['Energy'] }}
+          span Fat {{ entry.nutrition['Total lipid (fat)'] }}g
+          span Fiber {{ entry.nutrition['Fiber, total dietary'] }}g
+          span Sugar {{ entry.nutrition['Sugars, total'] }}g
     
     // Page Controls
     div(class='pagectrl' ng-hide='numPages() == 0')
