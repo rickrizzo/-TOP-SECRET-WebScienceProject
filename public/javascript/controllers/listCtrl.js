@@ -3,6 +3,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
+  $scope.data = [4, 8, 15, 16, 23, 42];
 
   // Pagination
   $scope.currentPage = 0;
@@ -14,6 +15,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   
   // Search Food
   $scope.getFood = function() {
+    $scope.entries.length = 0;
     var food = $scope.query.text;
   	$http.get("/api/get_food/" + food).then(function(response) {
       for(var food in response.data) {
@@ -23,6 +25,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
             id: response.data[food]
           });
       }
+    }, function(response) {
+      console.log(response);
     });
   };
 
@@ -32,12 +36,13 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
       console.log(response.data);
     });
   }
-});
 
-// Start pages correctly
-app.filter('pages', function() {
-  return function(input, start) {
-    start = +start;
-    return input.slice(start);
-  }
+  //Scale Widths
+  var x = d3.scale.linear().domain([0, d3.max($scope.data)]).range([0, 400]);
+
+  // Append Chart Bars
+  d3.select('.chart').selectAll("div")
+      .data($scope.data).enter().append("div")
+      .style("width", function(d) { return x(d) + "px"; })
+      .text(function(d) { return d; });
 });

@@ -1,33 +1,36 @@
 doctype html
 html
-  head
-    meta(name= 'viewport', content= 'width=device-width, initial-scale=1.0')
-    base(href='/')
-    title= title
-    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:400,700')
-    link(rel='stylesheet', href='/css/main.css')
+	head
+		meta(name= 'viewport', content= 'width=device-width, initial-scale=1.0')
+		base(href='/')
+		title= title
+		link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:400,700')
+		link(rel='stylesheet', href='/css/main.css')
 
-  body(ng-app='grogro')
+	body(ng-app='grogro')
 
-    // Navigation
-    nav(ng-controller='navCtrl' ng-init='selected = initSelect()')
-      ul
-        li
-          a(href= '/' ng-class='{"active": selected === "home"}' ng-click='selected = "home"')#home Home
-        li
-          a(href= '/lists' ng-class='{"active": selected === "lists"}' ng-click='selected = "lists"')#lists Lists
-        ul.nav-right
-          li
-            a(href= '/about' ng-class='{"active": selected === "about"}' ng-click='selected = "about"')#about About
-          li
-            a(href= '/login' ng-class='{"active": selected === "login"}' ng-click='selected = "login"')#login Login
+		// Navigation
+		nav(ng-controller='navCtrl' ng-init='selected = initSelect()')
+			ul
+				li
+					a(href= '/' ng-class='{"active": selected === "home"}' ng-click='selected = "home"')#home Home
+				li
+					a(href= '/lists' ng-class='{"active": selected === "lists"}' ng-click='selected = "lists"')#lists Lists
+				ul.nav-right
+					li
+						a(href= '/about' ng-class='{"active": selected === "about"}' ng-click='selected = "about"')#about About
+					li
+						a(href= '/login' ng-class='{"active": selected === "login"}' ng-click='selected = "login"')#login Login
 
-    // Main
-    div(ng-view)
+		// Main
+		main(ng-view)
 
-    // Scripts
-    script(type='text/javascript', src= angular)
-    script(type='text/javascript', src= modules)
-    script(type='text/javascript', src= app)
-    each controller in controllers
-      script(type='text/javascript', src= controller)
+		// Scripts
+		script(type='text/javascript', src= angular)
+		script(type='text/javascript', src= d3)
+		script(type='text/javascript', src= modules)
+		script(type='text/javascript', src= app)
+		each controller in controllers
+			script(type='text/javascript', src= controller)
+		each filter in filters
+			script(type='text/javascript', src= filter)
