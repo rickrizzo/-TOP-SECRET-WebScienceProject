@@ -169,8 +169,8 @@ form {
 			color: white;
 			line-height: 2em;
 			padding: 1em;
-			&:hover {
-				
+			&.selected {
+				background-color: black;
 			}
 			section {
 				font-size: 0.5em;

@@ -6,6 +6,14 @@ div(ng-controller="listCtrl")
     input(type='text' ng-model='query.text')
     button(ng-click='getFood()') Search
 
+  // Nutritional Information
+  section
+    h2 Nutritional Information
+    p Calories {{ nutritionData.energy }}
+    p Fat {{ nutritionData.fat }}
+    p Fiber {{ nutritionData.fiber }}
+    p Sugar {{ nutritionData.sugar }}
+
   // Search Results
   section(id='results')
     
@@ -17,7 +25,7 @@ div(ng-controller="listCtrl")
     
     // Search Results
     ul(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize')
-      li {{ entry.food }}
+      li(ng-click='toggleFood(entry)' ng-class='{true: "selected"}[entry.added]') {{ entry.food }}
         section
           span Calories {{ entry.nutrition['Energy'] }}
           span Fat {{ entry.nutrition['Total lipid (fat)'] }}g

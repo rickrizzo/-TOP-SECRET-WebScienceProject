@@ -3,7 +3,13 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
-  $scope.data = [4, 8, 15, 16, 23, 42];
+  $scope.nutritionData = {
+    'energy': 0,
+    'fat': 0,
+    'fiber': 0,
+    'sugar': 0
+  }
+  $scope.data = [4, 8, 16, 24, 32, 40];
 
   // Pagination
   $scope.currentPage = 0;
@@ -20,12 +26,12 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   	$http.get('/api/get_food/' + food).then(function(response) {
       for(var food in response.data) {
         $http.get('/api/get_nutrition/' + response.data[food]).then(function(nutrition) {
-          console.log(nutrition.data);
           $scope.entries.push(
           { 
             food : food,
             id: response.data[food],
-            nutrition: nutrition.data
+            nutrition: nutrition.data,
+            added: false
           });
         })
       }
@@ -34,12 +40,22 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     });
   };
 
-  // Search Nutrition
-  /*$scope.getNutrition = function(id) {
-    $http.get("/api/get_nutrition/" + id).then(function(response) {
-      return response.data;
-    });
-  }*/
+  // Add Food
+  $scope.toggleFood = function(entry) {
+    if(entry.added) {
+      $scope.nutritionData.energy -= +entry.nutrition['Energy'];
+      $scope.nutritionData.fat -= +entry.nutrition['Total lipid (fat)'];
+      $scope.nutritionData.fiber -= +entry.nutrition['Fiber, total dietary'];
+      $scope.nutritionData.sugar -= +entry.nutrition['Sugars, total'];
+      entry.added = false;
+    } else {
+      $scope.nutritionData.energy += +entry.nutrition['Energy'];
+      $scope.nutritionData.fat += +entry.nutrition['Total lipid (fat)'];
+      $scope.nutritionData.fiber += +entry.nutrition['Fiber, total dietary'];
+      $scope.nutritionData.sugar += +entry.nutrition['Sugars, total'];
+      entry.added = true;
+    }
+  }
 
   //Scale Widths
   var x = d3.scale.linear().domain([0, d3.max($scope.data)]).range([0, 400]);
