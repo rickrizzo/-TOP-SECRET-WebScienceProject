@@ -11,6 +11,7 @@ var db = mongoose.connect('mongodb://admin:admin@ds013931.mlab.com:13931/grogro'
 
 var routes = require('./routes/index');
 var api = require('./routes/api');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/modules', express.static(__dirname + '/node_modules/'));
 // routes
 app.use('/', routes);
 app.use('/api', api);
+app.use('/fb_login', login);
 app.use('*', routes);
 
 // catch 404 and forward to error handler
