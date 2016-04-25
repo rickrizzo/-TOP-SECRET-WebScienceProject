@@ -1,29 +1,34 @@
-var userModel = require('../models/userModel.js');
+var userModel = require('../models/userModel');
 
 module.exports = {
 	create: function(req, res){
 		var user = new userModel({
-			fb_id: req.params.id,
-			name: req.params.name,
+			fb_id: req.params.profile.id,
+			name: req.params.profile.name,
 			lists: []
 		});
 
 		user.save(function(err, user){
 			if(err){
-				// error handling
+				return res.status(500).json({
+					message: 'Error saving user',
+					error: err
+				});
 			}
 			return res.json({
-				message: "saved",
-				_id = user.user_id
+				message: "saved"
 			});
 		});
 	},
 	delete: function(req, res){
 		userModel.remove({
-			_id : req.params.user_id
+			'_id' : req.params.user_id
 		}, function(err, user){
 			if(err){
-				// error handling
+				return res.status(500).json({
+			      	message: 'Error deleting user',
+			      	error: err
+			    });
 			}
 			return res.json(user);
 		});
