@@ -133,9 +133,9 @@ form {
 	padding: 1em;
 	text-align: center;
 	h2 {
-		padding-top: 0.75em;
 		@media (min-width: $tablet) {
 			font-size: 2em;
+			padding-top: 0.75em;
 		}
 	}
 	input {
@@ -164,12 +164,19 @@ form {
 		margin: 1em;
 		padding: 0;
 		li {
+			text-align: center;
 			background-color: $lists;
 			color: white;
 			line-height: 2em;
 			padding: 1em;
-			&:hover {
-				
+			&.selected {
+				background-color: black;
+			}
+			section {
+				font-size: 0.5em;
+				span {
+					margin: 0 1em;
+				}
 			}
 		}
 	}

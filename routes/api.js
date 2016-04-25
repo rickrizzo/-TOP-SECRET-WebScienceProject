@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
+var apikey = 'c7cIi88CYsXPaT1sxqhLSLz2OaROEEOdjFFHff79';
 
 // Get Food
 router.get('/get_food/:food', function(req, res, next) {
@@ -8,7 +9,7 @@ router.get('/get_food/:food', function(req, res, next) {
   var return_data = {};
   var data = null;
 
-  request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + food + '&sort=r&offset=0&api_key=DEMO_KEY', function (error, res1, body) {
+  request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + food + '&sort=r&offset=0&api_key=' + apikey, function (error, res1, body) {
     if (!error && res1.statusCode == 200) {
       data = JSON.parse(res1.body);
       for (var item in data.list.item) {
@@ -17,6 +18,7 @@ router.get('/get_food/:food', function(req, res, next) {
       res.send(return_data);
     }
     else {
+      console.log("ERROR!", body);
       res.status(500).send("Invalid food query!");
     }
   });
@@ -27,7 +29,7 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
   var interested = ["Energy", "Sugars, total", "Total lipid (fat)", "Carboydrate, by difference", "Fiber, total dietary"];
   var return_data = {};
 
-  request('http://api.nal.usda.gov/ndb/reports/?ndbno=' + food + '&type=b&format=json&api_key=DEMO_KEY', function(error, res2, body) {
+  request('http://api.nal.usda.gov/ndb/reports/?ndbno=' + food + '&type=b&format=json&api_key=' + apikey, function(error, res2, body) {
     if (!error && res2.statusCode == 200) {
       data = JSON.parse(res2.body);
       var nutrients = data.report.food["nutrients"];
