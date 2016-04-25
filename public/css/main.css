@@ -107,10 +107,17 @@ form {
   margin: 1em;
   padding: 0; }
   #results ul li {
+    text-align: center;
     background-color: #FF003B;
     color: white;
     line-height: 2em;
     padding: 1em; }
+    #results ul li.selected {
+      background-color: black; }
+    #results ul li section {
+      font-size: 0.5em; }
+      #results ul li section span {
+        margin: 0 1em; }
 
 #results div.pagectrl {
   text-align: center;
