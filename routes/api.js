@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var apikey = 'c7cIi88CYsXPaT1sxqhLSLz2OaROEEOdjFFHff79';
+
+var apikeys = ['c7cIi88CYsXPaT1sxqhLSLz2OaROEEOdjFFHff79', 'BD5eu8hQLzoGG2jmEjkF4EBhT9HU4uEeJcjFz9oW', 'CSnXW6BKcazu7RgncwWKqLCGzodQNDxWLm1Q0VP3'];
+
+var current_key = 0;
 
 // Get Food
 router.get('/get_food/:food', function(req, res, next) {
@@ -9,7 +12,22 @@ router.get('/get_food/:food', function(req, res, next) {
   var return_data = {};
   var data = null;
 
-  request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + food + '&sort=r&offset=0&api_key=' + apikey, function (error, res1, body) {
+  if (current_key == apikeys.length) {
+    current_key = 0;
+  }
+
+  request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + food + '&sort=r&offset=0&api_key=' + apikeys[current_key], function (error, res1, body) {
+    
+    console.log("Ratelimit Remaining on key " + current_key +": " + res1.caseless.dict["x-ratelimit-remaining"]);
+    if (res1.caseless.dict["x-ratelimit-remaining"] <= 20) {
+      if (current_key == apikeys.length - 1) {
+        current_key = 0;
+      }
+      else {
+        current_key++;
+      }
+    }
+
     if (!error && res1.statusCode == 200) {
       data = JSON.parse(res1.body);
       for (var item in data.list.item) {
@@ -26,10 +44,20 @@ router.get('/get_food/:food', function(req, res, next) {
 
 router.get('/get_nutrition/:food_id', function(req, res, next) {
   var food = req.params.food_id;
-  var interested = ["Energy", "Sugars, total", "Total lipid (fat)", "Carboydrate, by difference", "Fiber, total dietary"];
+  var interested = ["Energy", "Sugars, total", "Total lipid (fat)", "Carbohydrate, by difference", "Fiber, total dietary"];
   var return_data = {};
 
-  request('http://api.nal.usda.gov/ndb/reports/?ndbno=' + food + '&type=b&format=json&api_key=' + apikey, function(error, res2, body) {
+  request('http://api.nal.usda.gov/ndb/reports/?ndbno=' + food + '&type=b&format=json&api_key=' + apikeys[current_key], function(error, res2, body) {
+    console.log("Ratelimit Remaining on key " + current_key +": " + res2.caseless.dict["x-ratelimit-remaining"]);
+    if (res2.caseless.dict["x-ratelimit-remaining"] <= 20) {
+      if (current_key == apikeys.length - 1) {
+        current_key = 0;
+      }
+      else {
+        current_key++;
+      }
+    }
+
     if (!error && res2.statusCode == 200) {
       data = JSON.parse(res2.body);
       var nutrients = data.report.food["nutrients"];
@@ -41,6 +69,9 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
       }
       
       res.send(return_data);
+    }
+    else {
+      console.log("Error in get_nutrition: " + error);
     }
   });
 });
