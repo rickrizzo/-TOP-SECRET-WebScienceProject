@@ -9,10 +9,12 @@ div(ng-controller="listCtrl")
   // Nutritional Information
   section
     h2 Nutritional Information
-    p Calories {{ nutritionData.energy }}
-    p Fat {{ nutritionData.fat }}
-    p Fiber {{ nutritionData.fiber }}
-    p Sugar {{ nutritionData.sugar }}
+    p {{ groceryList }}
+    p Calories {{ getNutrition('Energy') }}
+    p Carbohydtates {{ getNutrition('Carbohydrates') }}
+    p Fat {{ getNutrition('Fat') }}
+    p Fiber {{ getNutrition('Fiber') }}
+    p Sugar {{ getNutrition('Sugar') }}
 
   // Search Results
   section(id='results')
@@ -28,9 +30,10 @@ div(ng-controller="listCtrl")
       li(ng-click='toggleFood(entry)' ng-class='{true: "selected"}[entry.added]') {{ entry.food }}
         section
           span Calories {{ entry.nutrition['Energy'] }}
-          span Fat {{ entry.nutrition['Total lipid (fat)'] }}g
-          span Fiber {{ entry.nutrition['Fiber, total dietary'] }}g
-          span Sugar {{ entry.nutrition['Sugars, total'] }}g
+          span Carbohydrates {{ entry.nutrition['Carbohydrates'] }}g
+          span Fat {{ entry.nutrition['Fat'] }}g
+          span Fiber {{ entry.nutrition['Fiber'] }}g
+          span Sugar {{ entry.nutrition['Sugar'] }}g
     
     // Page Controls
     div(class='pagectrl' ng-hide='numPages() == 0')
