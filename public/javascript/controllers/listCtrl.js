@@ -23,16 +23,16 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     // Add Items
   	$http.get('/api/get_food/' + food).then(function(response) {
       for(var food in response.data) {
-        tmp.push({ 
+        $scope.entries.push({ 
           food : food,
           id: response.data[food],
           nutrition: {},
-          added: false
+          added: null
         });
       }
 
       // Add Nutrition Information
-      tmp.forEach(function(entry) {
+      /*tmp.forEach(function(entry) {
         $http.get('/api/get_nutrition/' + response.data[food]).then(function(nutrition) {
           entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']);
           entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']);
@@ -40,9 +40,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
           entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']);
           entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']);
         });
-      });
-
-      $scope.entries = tmp;
+      });*/
     }, function(response) {
       console.log(response);
     });
@@ -50,18 +48,38 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
 
   // Add Food
   $scope.toggleFood = function(entry) {
+    // If Added
     if(entry.added) {
-      delete $scope.groceryList[entry.id];
       entry.added = false;
-    } else {
-      $scope.groceryList[entry.id] = entry;
+      delete $scope.groceryList[entry.id];
+      return;
+    }
+
+    // If Never Added
+    if(entry.added == null) {
+      $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
+        entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']);
+        entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']);
+        entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']);
+        entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']);
+        entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']);
+        entry.added = true;
+        $scope.groceryList[entry.id] = entry;
+        return;
+      });
+    }
+
+    // If Removed
+    if(!entry.added) {
       entry.added = true;
+      $scope.groceryList[entry.id] = entry;
+      return;
     }
     change(randomData($scope.groceryList));
   }
 
-  // Get Nutrition
-  $scope.getNutrition = function(category) {
+  // Sum Nutrition
+  $scope.sumNutrition = function(category) {
     var total = 0;
     for(var entry in $scope.groceryList) {
       total += $scope.groceryList[entry].nutrition[category];
