@@ -122,6 +122,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     });
   }
 
+  //change(randomData({}))
+
   function change(data) {
     /* ------- PIE SLICES -------*/
     var slice = svg.select(".slices").selectAll("path.slice")
@@ -132,8 +134,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
       .style("fill", function(d) { return color(d.data.label); })
       .attr("class", "slice");
 
-    slice   
-      .transition().duration(1000)
+    slice.transition().duration(1000)
       .attrTween("d", function(d) {
         this._current = this._current || d;
         var interpolate = d3.interpolate(this._current, d);
@@ -141,7 +142,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
         return function(t) {
           return arc(interpolate(t));
         };
-      })
+      });
 
     slice.exit()
       .remove();
@@ -193,7 +194,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     polyline.enter()
       .append("polyline");
 
-    polyline.transition().duration(1000)
+    polyline.transition().duration(700)
       .attrTween("points", function(d){
         this._current = this._current || d;
         var interpolate = d3.interpolate(this._current, d);
@@ -203,25 +204,27 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
           var pos = outerArc.centroid(d2);
           pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
           return [arc.centroid(d2), outerArc.centroid(d2), pos];
-        };      
-      });
+        };
+    });
     
     polyline.exit()
       .remove();
 
-    /* remove text and lines if no data */
-    var HasValue = false;
+    setTimeout(function(){
+      /* remove text and lines if no data */
+      var HasValue = false;
 
-    for (var entry in data) {
-      if (data[entry].value != 0) {
-        HasValue = true;
+      for (var entry in data) {
+        if (data[entry].value != 0) {
+          HasValue = true;
+        }
       }
-    }
 
-    if (!HasValue) {
-      text.remove();
-      polyline.remove();
-    }
+      if (!HasValue) {
+        text.remove();
+        polyline.remove();
+      }
+    }, 700);
   };
 
 });
