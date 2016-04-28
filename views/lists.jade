@@ -40,3 +40,5 @@ div(ng-controller="listCtrl")
       button(ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
       span {{ currentPage + 1 }} / {{ numPages() }}
       button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
+
+  div(class='chart')

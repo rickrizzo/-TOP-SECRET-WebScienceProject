@@ -68,13 +68,9 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     return total;
   }
 
-});
-
-var svg = d3.select("body")
+var svg = d3.select(".chart")
   .append("svg")
   .append("g")
-
-console.log("test");
 
 svg.append("g")
   .attr("class", "slices");
@@ -83,8 +79,8 @@ svg.append("g")
 svg.append("g")
   .attr("class", "lines");
 
-var width = 300,
-    height = 200,
+var width = 900,
+    height = 400,
   radius = Math.min(width, height) / 2;
 
 var pie = d3.layout.pie()
@@ -106,16 +102,18 @@ svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 var key = function(d){ return d.data.label; };
 
 var color = d3.scale.ordinal()
-  .domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
+  .domain(["Energy", "Sugars", "Total Fat", "Carbohydrates", "Total Fiber"])
   .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 function randomData (){
   var labels = color.domain();
   return labels.map(function(label){
+    /* replace Math.random with data for each label */
     return { label: label, value: Math.random() }
   });
 }
 
+/* call this when data changes */
 change(randomData());
 
 d3.select(".randomize")
@@ -125,7 +123,6 @@ d3.select(".randomize")
 
 
 function change(data) {
-
   /* ------- PIE SLICES -------*/
   var slice = svg.select(".slices").selectAll("path.slice")
     .data(pie(data), key);
@@ -214,3 +211,5 @@ function change(data) {
   polyline.exit()
     .remove();
 };
+
+});
