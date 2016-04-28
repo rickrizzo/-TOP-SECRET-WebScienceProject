@@ -30,17 +30,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
           added: null
         });
       }
-
-      // Add Nutrition Information
-      /*tmp.forEach(function(entry) {
-        $http.get('/api/get_nutrition/' + response.data[food]).then(function(nutrition) {
-          entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']);
-          entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']);
-          entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']);
-          entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']);
-          entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']);
-        });
-      });*/
     }, function(response) {
       console.log(response);
     });
@@ -48,12 +37,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
 
   // Add Food
   $scope.toggleFood = function(entry) {
-    // If Added
-    if(entry.added) {
-      entry.added = false;
-      delete $scope.groceryList[entry.id];
-      return;
-    }
 
     // If Never Added
     if(entry.added == null) {
@@ -65,17 +48,23 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
         entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']);
         entry.added = true;
         $scope.groceryList[entry.id] = entry;
-        return;
+        change(randomData($scope.groceryList));
       });
     }
 
+    // If Added
+    else if(entry.added) {
+      entry.added = false;
+      delete $scope.groceryList[entry.id];
+      change(randomData($scope.groceryList));
+    }
+
     // If Removed
-    if(!entry.added) {
+    else if(!entry.added) {
       entry.added = true;
       $scope.groceryList[entry.id] = entry;
-      return;
+      change(randomData($scope.groceryList));
     }
-    change(randomData($scope.groceryList));
   }
 
   // Sum Nutrition
@@ -106,6 +95,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
       height = 400,
       radius = Math.min(width, height) / 2;
 
+  var first_run = true;
+
   var pie = d3.layout.pie()
     .sort(null)
     .value(function(d) {
@@ -126,7 +117,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
 
   var color = d3.scale.ordinal()
     .domain(["Energy", "Sugar", "Fat", "Carbohydrates", "Fiber"])
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]);
+    .range(["#b30000", "#e34a33", "#fc8d59", "#fdcc8a", "#fdcc8a"]);
 
   function randomData (groceryList){
     var labels = color.domain();
@@ -140,7 +131,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     });
   }
 
-  //change(randomData({}))
+  change(randomData({}))
 
   function change(data) {
     /* ------- PIE SLICES -------*/
@@ -228,21 +219,30 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     polyline.exit()
       .remove();
 
-    setTimeout(function(){
-      /* remove text and lines if no data */
-      var HasValue = false;
+    if (first_run) {
+      text.remove();
+      polyline.remove();
+      first_run = false;
+    }
+    else {
+      setTimeout(function(){
+        /* remove text and lines if no data */
+        var HasValue = false;
 
-      for (var entry in data) {
-        if (data[entry].value != 0) {
-          HasValue = true;
+        for (var entry in data) {
+          if (data[entry].value != 0) {
+            HasValue = true;
+          }
         }
-      }
 
-      if (!HasValue) {
-        text.remove();
-        polyline.remove();
-      }
-    }, 700);
+        if (!HasValue) {
+          text.remove();
+          polyline.remove();
+        }
+      }, 700);      
+    }
+
+
   };
 
 });
