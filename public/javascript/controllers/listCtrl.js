@@ -1,5 +1,5 @@
 // List Page Controller
-app.controller('listCtrl', function($scope, $routeParams, $http) {
+app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
@@ -49,6 +49,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
         entry.added = true;
         $scope.groceryList[entry.id] = entry;
         change(randomData($scope.groceryList));
+        listService.setEntries($scope.groceryList);
       });
     }
 
