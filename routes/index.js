@@ -25,18 +25,9 @@ router.get('/', function(req, res, next) {
 
 // Render Jade Partials
 router.get('/partials/:name', function(req, res, next) {
-	if (req.params.name == "lists") {
-		res.render(req.params.name, {
-			title: 'Gro Gro',
-			chart: 'javascript/chart.js'
-		});		
-	}
-	else {
-		res.render(req.params.name, {
-			title: 'Gro Gro'
-		});	
-	}
-
+	res.render(req.params.name, {
+		title: 'Gro Gro'
+	});
 });
 
 module.exports = router;
