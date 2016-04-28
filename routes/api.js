@@ -17,7 +17,6 @@ router.get('/get_food/:food', function(req, res, next) {
   }
 
   request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + food + '&sort=r&offset=0&api_key=' + apikeys[current_key], function (error, res1, body) {
-    
     console.log("Ratelimit Remaining on key " + current_key +": " + res1.caseless.dict["x-ratelimit-remaining"]);
     if (res1.caseless.dict["x-ratelimit-remaining"] <= 20) {
       if (current_key == apikeys.length - 1) {
@@ -64,7 +63,7 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
       return_data["name"] = data.report.food.name;
       for (var item in nutrients) {
         if (interested.indexOf(nutrients[item]["name"]) != -1) {
-          return_data[nutrients[item]["name"]] = nutrients[item]["value"];
+          return_data[nutrients[item]["name"]] = nutrients[item]["measures"][0]["value"];
         }
       }
       
