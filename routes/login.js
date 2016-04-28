@@ -12,19 +12,18 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:3000/fb_login/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
+    console.log("works");
     loginCtrl.create(profile, 200);
   }
 ));
 
-router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
   }
 );
-
-
 
 
 module.exports = router;
