@@ -187,7 +187,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
       .remove();
 
     /* ------- SLICE TO TEXT POLYLINES -------*/
-
     var polyline = svg.select(".lines").selectAll("polyline")
       .data(pie(data), key);
     
@@ -210,8 +209,9 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     polyline.exit()
       .remove();
 
+    /* remove text and lines if no data */
     var HasValue = false;
-    
+
     for (var entry in data) {
       if (data[entry].value != 0) {
         HasValue = true;
