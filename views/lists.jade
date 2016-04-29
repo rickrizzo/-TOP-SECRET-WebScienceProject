@@ -10,11 +10,11 @@ div(ng-controller="listCtrl")
   section
     h2 Nutritional Information
     p {{ groceryList }}
-    p Calories {{ getNutrition('Energy') }}
-    p Carbohydtates {{ getNutrition('Carbohydrates') }}
-    p Fat {{ getNutrition('Fat') }}
-    p Fiber {{ getNutrition('Fiber') }}
-    p Sugar {{ getNutrition('Sugar') }}
+    p Calories {{ sumNutrition('Energy') }}
+    p Carbohydtates {{ sumNutrition('Carbohydrates') }}
+    p Fat {{ sumNutrition('Fat') | number }}
+    p Fiber {{ sumNutrition('Fiber') }}
+    p Sugar {{ sumNutrition('Sugar') }}
 
   // Search Results
   section(id='results')
@@ -28,12 +28,6 @@ div(ng-controller="listCtrl")
     // Search Results
     ul(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize')
       li(ng-click='toggleFood(entry)' ng-class='{true: "selected"}[entry.added]') {{ entry.food }}
-        section
-          span Calories {{ entry.nutrition['Energy'] }}
-          span Carbohydrates {{ entry.nutrition['Carbohydrates'] }}g
-          span Fat {{ entry.nutrition['Fat'] }}g
-          span Fiber {{ entry.nutrition['Fiber'] }}g
-          span Sugar {{ entry.nutrition['Sugar'] }}g
     
     // Page Controls
     div(class='pagectrl' ng-hide='numPages() == 0')
@@ -41,5 +35,4 @@ div(ng-controller="listCtrl")
       span {{ currentPage + 1 }} / {{ numPages() }}
       button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
 
-  // Chart
-  div(id="chart" class="chart")
+  div(class='chart')
