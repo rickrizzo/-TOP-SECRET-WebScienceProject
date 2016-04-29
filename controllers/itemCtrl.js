@@ -13,6 +13,11 @@ module.exports = {
 						api_id: req.id,
 						name: req.name,
 						nutrition: {
+							energy: req.nutrients.eng,
+							sugars: req.nutrients.sug,
+							fat: req.nutrients.fat,
+							carbs: req.nutrients.car,
+							fiber: req.nutrients.fib
 						}
 					});
 
