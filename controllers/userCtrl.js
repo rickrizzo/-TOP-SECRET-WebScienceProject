@@ -1,8 +1,8 @@
 var userModel = require('../models/userModel');
 
 module.exports = {
-	findOrCreate: function(profile){	
-		userModel.findOne({'fb_id':profile.id},function(err, found){
+	findOrCreate: function(req, res){	
+		userModel.findOne({'fb_id':req.profile.id},function(err, found){
 			if(err){
 				return false
 			} else{
@@ -10,8 +10,8 @@ module.exports = {
 					return found;
 				}else{
 					var user = new userModel({
-						fb_id: profile.id,
-						name: profile.displayName,
+						fb_id: req.profile.id,
+						name: req.profile.displayName,
 						lists: []
 					});
 
@@ -19,6 +19,13 @@ module.exports = {
 						return newuser;
 					});	
 				}
+			}
+		});
+	},
+	addList: function(req, res){
+		userModel.findOne({'user_id':req.user_id}, function(err, found){
+			if(found){
+				found.lists.push(req.list_id);
 			}
 		});
 	},
