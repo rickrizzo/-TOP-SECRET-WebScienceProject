@@ -1,10 +1,11 @@
 // List Page Controller
-app.controller('listCtrl', function($scope, $routeParams, $http) {
+app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
+  
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = {};
-  $scope.data = [4, 8, 16, 24, 32, 40];
+  $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 31, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5}  
 
   // Pagination
   $scope.currentPage = 0;
@@ -27,20 +28,10 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
           food : food,
           id: response.data[food],
           nutrition: {},
+          amount: 0,
           added: null
         });
       }
-
-      // Add Nutrition Information
-      /*tmp.forEach(function(entry) {
-        $http.get('/api/get_nutrition/' + response.data[food]).then(function(nutrition) {
-          entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']);
-          entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']);
-          entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']);
-          entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']);
-          entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']);
-        });
-      });*/
     }, function(response) {
       console.log(response);
     });
@@ -48,34 +39,53 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
 
   // Add Food
   $scope.toggleFood = function(entry) {
-    // If Added
-    if(entry.added) {
-      entry.added = false;
-      delete $scope.groceryList[entry.id];
-      return;
-    }
 
     // If Never Added
     if(entry.added == null) {
       $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
-        entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']);
-        entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']);
-        entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']);
-        entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']);
-        entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']);
+        entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
+        entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
+        entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
+        entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
+        entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
+        entry.amount = 1;
         entry.added = true;
         $scope.groceryList[entry.id] = entry;
-        return;
+        change(randomData($scope.groceryList));
+        listService.setEntries($scope.groceryList);
       });
     }
 
-    // If Removed
-    if(!entry.added) {
-      entry.added = true;
-      $scope.groceryList[entry.id] = entry;
-      return;
+    // If Added
+    else if(entry.added) {
+      entry.added = false;
+      entry.amount = 0;
+      delete $scope.groceryList[entry.id];
+      change(randomData($scope.groceryList));
     }
-    change(randomData($scope.groceryList));
+
+    // If Removed
+    else if(!entry.added) {
+      entry.added = true;
+      entry.amount = 1;
+      $scope.groceryList[entry.id] = entry;
+      change(randomData($scope.groceryList));
+    }
+  }
+
+  // Add Item
+  $scope.incrementItem = function(entry) {
+    entry.amount ++;
+  }
+  // Remove Item
+  $scope.decrementItem = function(entry) {
+    entry.amount --;
+    if(entry.amount <= 0) {
+      entry.added = false;
+      entry.amount = 0;
+      delete $scope.groceryList[entry.id];
+      change(randomData($scope.groceryList));
+    }
   }
 
   // Sum Nutrition
@@ -87,6 +97,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     return total;
   }
 
+  // D3 Chart
   var svg = d3.select(".chart > svg")
   if (svg.empty()) {
 
@@ -105,6 +116,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
   var width = 900,
       height = 400,
       radius = Math.min(width, height) / 2;
+
+  var first_run = true;
 
   var pie = d3.layout.pie()
     .sort(null)
@@ -126,7 +139,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
 
   var color = d3.scale.ordinal()
     .domain(["Energy", "Sugar", "Fat", "Carbohydrates", "Fiber"])
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]);
+    .range(["#b30000", "#e34a33", "#fc8d59", "#fdcc8a", "#fef0d9"]);
 
   function randomData (groceryList){
     var labels = color.domain();
@@ -140,6 +153,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     });
   }
 
+  change(randomData({}))
+
   function change(data) {
     /* ------- PIE SLICES -------*/
     var slice = svg.select(".slices").selectAll("path.slice")
@@ -150,8 +165,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
       .style("fill", function(d) { return color(d.data.label); })
       .attr("class", "slice");
 
-    slice   
-      .transition().duration(1000)
+    slice.transition().duration(1000)
       .attrTween("d", function(d) {
         this._current = this._current || d;
         var interpolate = d3.interpolate(this._current, d);
@@ -159,7 +173,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
         return function(t) {
           return arc(interpolate(t));
         };
-      })
+      });
 
     slice.exit()
       .remove();
@@ -211,7 +225,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
     polyline.enter()
       .append("polyline");
 
-    polyline.transition().duration(1000)
+    polyline.transition().duration(700)
       .attrTween("points", function(d){
         this._current = this._current || d;
         var interpolate = d3.interpolate(this._current, d);
@@ -221,25 +235,36 @@ app.controller('listCtrl', function($scope, $routeParams, $http) {
           var pos = outerArc.centroid(d2);
           pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
           return [arc.centroid(d2), outerArc.centroid(d2), pos];
-        };      
-      });
+        };
+    });
     
     polyline.exit()
       .remove();
 
-    /* remove text and lines if no data */
-    var HasValue = false;
-
-    for (var entry in data) {
-      if (data[entry].value != 0) {
-        HasValue = true;
-      }
-    }
-
-    if (!HasValue) {
+    if (first_run) {
       text.remove();
       polyline.remove();
+      first_run = false;
     }
+    else {
+      setTimeout(function(){
+        /* remove text and lines if no data */
+        var HasValue = false;
+
+        for (var entry in data) {
+          if (data[entry].value != 0) {
+            HasValue = true;
+          }
+        }
+
+        if (!HasValue) {
+          text.remove();
+          polyline.remove();
+        }
+      }, 700);      
+    }
+
+
   };
 
 });
