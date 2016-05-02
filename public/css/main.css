@@ -151,4 +151,18 @@ polyline{
   fill: none;
 }
 
+.center {
+    margin: auto;
+    border: 3px solid #07E842;
+    padding: 10px;}
+  .center li{
+      list-style-type: none;
+      color:#07E842;
+      line-height: 2em;
+      background-color: white;
+      text-align: center;
+      border: 3px solid white;
+      margin-bottom:10px;
+      line-height: 2em;
+    }  
 
