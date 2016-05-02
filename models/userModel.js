@@ -8,7 +8,7 @@ var userSchema = new Schema({
 	"user_id": ObjectId,
 	"fb_id": String,
 	"name": String,
-	"lists": [listModel.schema]
+	"lists": []
 });
 
 

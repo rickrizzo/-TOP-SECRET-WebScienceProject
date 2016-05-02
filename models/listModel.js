@@ -7,7 +7,7 @@ var listSchema = new Schema({
 	"list_id": ObjectId,
 	"user_id": String,
 	"name": String,
-	"items": [itemModel.schema]
+	"items": []
 });
 
 

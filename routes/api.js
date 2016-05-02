@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var itemCtrl = require('../controllers/itemCtrl');
-var loginCtrl = require('../controllers/loginCtrl');
+var listCtrl = require('../controllers/listCtrl');
 
 var apikeys = ['c7cIi88CYsXPaT1sxqhLSLz2OaROEEOdjFFHff79', 'BD5eu8hQLzoGG2jmEjkF4EBhT9HU4uEeJcjFz9oW', 'CSnXW6BKcazu7RgncwWKqLCGzodQNDxWLm1Q0VP3'];
 
@@ -77,13 +77,18 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
   });
 });
 
-router.get('/add_list/:food', function(req, res, next) {
-  var list_name = req.params.list;
+router.get('/add_list/:list/:food_id', function(req, res, next) {
+  var food_id = req.params.food_id;
+  var list = req.params.list;
+  // commented out until I can figure out how to add session to get user_id
+  // listCtrl.addItem({name: list, api_id: food_id, user_id: ??});
   res.send('adds a food to the users list');
 });
 
 router.get('/get_list/:list', function(req, res, next) {
   var list_name = req.params.list;
+  // commented out until I can figure out how to add session to get user_id
+  //listCtrl.findOrCreate({name: list_name, user_id: ??});
   res.send('gets a users list');
 });
 
@@ -94,6 +99,8 @@ router.get('/update_list/:list', function(req, res, next) {
 
 router.get('/del_list/:list', function(req, res, next) {
   var list = req.params.list;
+  // commented out until I can figure out how to add session to get user_id
+  //listCtrl.delete({name: list_name, user_id: ??});
   res.send('deletes a users list');
 });
 
