@@ -76,6 +76,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   // Add Item
   $scope.incrementItem = function(entry) {
     entry.amount ++;
+    change(randomData($scope.groceryList));
   }
   // Remove Item
   $scope.decrementItem = function(entry) {
@@ -84,8 +85,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
       entry.added = false;
       entry.amount = 0;
       delete $scope.groceryList[entry.id];
-      change(randomData($scope.groceryList));
     }
+    change(randomData($scope.groceryList));
   }
 
   // Sum Nutrition
