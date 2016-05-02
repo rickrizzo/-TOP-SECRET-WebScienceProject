@@ -1,10 +1,11 @@
 // List Page Controller
 app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
+  
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = {};
-  $scope.data = [4, 8, 16, 24, 32, 40];
+  $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5}  
 
   // Pagination
   $scope.currentPage = 0;
@@ -27,6 +28,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
           food : food,
           id: response.data[food],
           nutrition: {},
+          amount: 0,
           added: null
         });
       }
@@ -41,11 +43,12 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     // If Never Added
     if(entry.added == null) {
       $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
-        entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']);
-        entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']);
-        entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']);
-        entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']);
-        entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']);
+        entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
+        entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
+        entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
+        entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
+        entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
+        entry.amount = 1;
         entry.added = true;
         $scope.groceryList[entry.id] = entry;
         change(randomData($scope.groceryList));
@@ -56,6 +59,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     // If Added
     else if(entry.added) {
       entry.added = false;
+      entry.amount = 0;
       delete $scope.groceryList[entry.id];
       change(randomData($scope.groceryList));
     }
@@ -63,7 +67,23 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     // If Removed
     else if(!entry.added) {
       entry.added = true;
+      entry.amount = 1;
       $scope.groceryList[entry.id] = entry;
+      change(randomData($scope.groceryList));
+    }
+  }
+
+  // Add Item
+  $scope.incrementItem = function(entry) {
+    entry.amount ++;
+  }
+  // Remove Item
+  $scope.decrementItem = function(entry) {
+    entry.amount --;
+    if(entry.amount <= 0) {
+      entry.added = false;
+      entry.amount = 0;
+      delete $scope.groceryList[entry.id];
       change(randomData($scope.groceryList));
     }
   }
@@ -77,6 +97,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     return total;
   }
 
+  // D3 Chart
   var svg = d3.select(".chart > svg")
   if (svg.empty()) {
 
@@ -118,14 +139,14 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
   var color = d3.scale.ordinal()
     .domain(["Energy", "Sugar", "Fat", "Carbohydrates", "Fiber"])
-    .range(["#b30000", "#e34a33", "#fc8d59", "#fdcc8a", "#fdcc8a"]);
+    .range(["#b30000", "#e34a33", "#fc8d59", "#fdcc8a", "#fef0d9"]);
 
   function randomData (groceryList){
     var labels = color.domain();
     return labels.map(function(label){
       var value = 0
       for (var entry in groceryList) {
-        value += groceryList[entry]["nutrition"][label];
+        value += groceryList[entry]["nutrition"][label] * groceryList[entry].amount;
       }
 
       return { label: label, value: value }
@@ -242,8 +263,5 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         }
       }, 700);      
     }
-
-
   };
-
 });
