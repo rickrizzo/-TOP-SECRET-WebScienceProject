@@ -25,6 +25,9 @@ router.get('/', function(req, res, next) {
 
 // Render Jade Partials
 router.get('/partials/:name', function(req, res, next) {
+	if(req.params.name == '#=#_') {
+		req.params.name = '/';
+	}
 	res.render(req.params.name, {
 		title: 'Gro Gro'
 	});
