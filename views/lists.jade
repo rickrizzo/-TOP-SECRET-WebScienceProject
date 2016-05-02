@@ -3,7 +3,7 @@ div(ng-controller="listCtrl")
   // Input Food
   form.lists
     h2 What are you going to eat?
-    input(type='text' ng-model='query.text')
+    input(type='text' ng-model='query.text' required)
     button(ng-click='getFood()') Search
 
   // Search Results
@@ -31,7 +31,11 @@ div(ng-controller="listCtrl")
   // Ingredients
   h2 Foods
   ul
-    li(ng-repeat='item in groceryList') {{item}}
+    li(ng-repeat='item in groceryList') 
+      p {{item.food}} {{item.amount}}
+      button(ng-click='incrementItem(item)') +
+      button(ng-click='decrementItem(item)') -
+
 
   // Nutritional Information
   section
