@@ -4,7 +4,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = {};
-  $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 31, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5}  
+  $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5}  
 
   // Pagination
   $scope.currentPage = 0;
@@ -127,7 +127,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     return labels.map(function(label){
       var value = 0
       for (var entry in groceryList) {
-        value += groceryList[entry]["nutrition"][label];
+        value += groceryList[entry]["nutrition"][label] * groceryList[entry].amount;
       }
 
       return { label: label, value: value }
@@ -244,8 +244,5 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         }
       }, 700);      
     }
-
-
   };
-
 });
