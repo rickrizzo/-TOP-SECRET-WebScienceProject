@@ -1,5 +1,6 @@
 // List Page Controller
 app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
+  
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
@@ -47,7 +48,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
         entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
         entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
-        entry.amount ++;
+        entry.amount = 1;
         entry.added = true;
         $scope.groceryList[entry.id] = entry;
         change(randomData($scope.groceryList));
@@ -58,6 +59,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     // If Added
     else if(entry.added) {
       entry.added = false;
+      entry.amount = 0;
       delete $scope.groceryList[entry.id];
       change(randomData($scope.groceryList));
     }
@@ -65,7 +67,23 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     // If Removed
     else if(!entry.added) {
       entry.added = true;
+      entry.amount = 1;
       $scope.groceryList[entry.id] = entry;
+      change(randomData($scope.groceryList));
+    }
+  }
+
+  // Add Item
+  $scope.incrementItem = function(entry) {
+    entry.amount ++;
+  }
+  // Remove Item
+  $scope.decrementItem = function(entry) {
+    entry.amount --;
+    if(entry.amount <= 0) {
+      entry.added = false;
+      entry.amount = 0;
+      delete $scope.groceryList[entry.id];
       change(randomData($scope.groceryList));
     }
   }
@@ -79,6 +97,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     return total;
   }
 
+  // D3 Chart
   var svg = d3.select(".chart > svg")
   if (svg.empty()) {
 
