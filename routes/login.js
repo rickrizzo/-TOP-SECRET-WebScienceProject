@@ -13,6 +13,7 @@ router.use(passport.session());
 passport.use(new FacebookStrategy({
     clientID: '176656516048298',
     clientSecret: 'ce8c2e497fe9da446b6ddfd284dcb26e',
+    callbackURL: "http://grogro.herokuapp.com/fb_login/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
     userModel.findOne({'fb_id':profile.id},function(err, found){
