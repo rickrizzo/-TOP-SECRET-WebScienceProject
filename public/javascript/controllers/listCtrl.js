@@ -27,6 +27,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
           food : food,
           id: response.data[food],
           nutrition: {},
+          amount: 0,
           added: null
         });
       }
@@ -46,6 +47,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
         entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
         entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
+        entry.amount ++;
         entry.added = true;
         $scope.groceryList[entry.id] = entry;
         change(randomData($scope.groceryList));
