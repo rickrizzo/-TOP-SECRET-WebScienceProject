@@ -23,9 +23,10 @@ module.exports = {
 		});
 	},
 	addList: function(req, res){
-		userModel.findOne({'user_id':req.user_id}, function(err, found){
+		userModel.findOne({'fb_id':req.user_id}, function(err, found){
 			if(found){
 				found.lists.push(req.list_id);
+				found.save();
 			}
 		});
 	},

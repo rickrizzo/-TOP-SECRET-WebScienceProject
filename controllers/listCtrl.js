@@ -1,9 +1,10 @@
 var listModel = require('../models/listModel');
 var itemCtrl = require('./itemCtrl');
+var userCtrl = require('./userCtrl');
 
 module.exports = {
 	findOrCreate: function(req, res){	
-		listModel.findOne({'name':req.name},function(err, found){
+		listModel.findOne({'name':req.name, 'user_id': req.user_id},function(err, found){
 			if(err){
 				return null;
 			} else{
@@ -15,7 +16,7 @@ module.exports = {
 						name: req.name,
 						items: []
 					});
-
+					userCtrl.addList({list_id: req.name, user_id: req.user_id});
 					list.save(function(err, newlist){
 						return newlist;
 					});	
@@ -24,13 +25,14 @@ module.exports = {
 		});
 	},
 	addItem: function(req, res){
-		listModel.findOne({'name':req.list_name}, function(err, found){
+		this.findOrCreate({'name':req.name, 'user_id': req.user_id});
+		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
 			if(err){
 				return null;
 			}else{
 				if(found){
-					var item = itemCtrl.findOrCreate(req, res);
-					found.items.push(item);
+
+					found.items.push(req.api_id);
 					found.save();
 				}
 			}
@@ -47,7 +49,8 @@ module.exports = {
 	},
 	delete: function(req,res){
 		listModel.remove({
-			'name' : req.name
+			'name' : req.name,
+			'user_id': req.user_id
 		}, function(err, list){
 			if(err){
 				return null;
