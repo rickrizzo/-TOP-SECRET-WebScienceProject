@@ -3,7 +3,7 @@ var request = require('request');
 
 var router = express.Router();
 
-/* GET home page. */
+// Get Page Layouts
 router.get('/', function(req, res, next) {
   // Render Layout
 	res.render('layout', {

@@ -42,6 +42,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
     // If Never Added
     if(entry.added == null) {
+      entry.added = true;
       $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
         entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
         entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
@@ -49,7 +50,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
         entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
         entry.amount = 1;
-        entry.added = true;
         $scope.groceryList[entry.id] = entry;
         change(randomData($scope.groceryList));
         listService.setEntries($scope.groceryList);
