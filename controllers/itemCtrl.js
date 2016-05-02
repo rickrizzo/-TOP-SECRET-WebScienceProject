@@ -2,27 +2,42 @@ var itemModel = require('../models/itemModel');
 
 module.exports = {
 	findOrCreate: function(req, res){	
-		itemModel.findOne({'api_id':req.id},function(err, found){
+		itemModel.findOne({'api_id':req.api_id},function(err, found){
 			if(err){
-				return null;
+				return res.status(500).json({
+					message: 'Error finding food item',
+					error: err
+				});
 			} else{
 				if(found){
-					return found;
+					return res.json({
+						message: 'found',
+						_id: found._id
+					})
 				}else{
 					var item = new itemModel({
-						api_id: req.id,
-						name: req.name,
+						api_id: req.api_id,
+						name: req.nutrition.name,
 						nutrition: {
-							energy: req.nutrients.eng,
-							sugars: req.nutrients.sug,
-							fat: req.nutrients.fat,
-							carbs: req.nutrients.car,
-							fiber: req.nutrients.fib
+							energy: req.nutrition.Energy,
+							sugars: req.nutrition['Sugars, total'],
+							fat: req.nutrition['Total lipid (fat)'],
+							carbs: req.nutrition['Carbohydrate, by difference'],
+							fiber: req.nutrition['Fiber, total dietary']
 						}
 					});
 
 					item.save(function(err, newitem){
-						return newitem;
+						if(err){
+							return res.status(500).json({
+								message: 'Error saving food item',
+								error: err
+							});
+						}
+						return res.json({
+							message: 'saved',
+							_id: newitem._id
+						});
 					});	
 				}
 			}

@@ -40,12 +40,12 @@ passport.use(new FacebookStrategy({
 
 passport.serializeUser(function(user, done) {
   //place user's id in cookie
-  done(null, user.fb_id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
   //retrieve user from database by id
-  loginCtrl.find(fb_id, function(err, user) {
+  userModel.findById(id, function(err, user) {
     done(err, user);
   });
 });
