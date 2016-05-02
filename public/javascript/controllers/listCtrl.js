@@ -11,6 +11,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.currentPage = 0;
   $scope.pageSize = 10;
   $scope.entries = [];
+  $scope.noresults = false;
   $scope.numPages = function() {
     return Math.ceil($scope.entries.length / $scope.pageSize);
   }
@@ -23,6 +24,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
     // Add Items
   	$http.get('/api/get_food/' + food).then(function(response) {
+      $scope.noresults = false;
       for(var food in response.data) {
         $scope.entries.push({ 
           food : food,
@@ -33,7 +35,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         });
       }
     }, function(response) {
-      console.log(response);
+      $scope.noresults = true;
     });
   };
 
@@ -73,11 +75,22 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     }
   }
 
+  // Grocery List Size
+  $scope.isEmpty = function(obj) {
+    for (key in obj) {
+      if(obj.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // Add Item
   $scope.incrementItem = function(entry) {
     entry.amount ++;
     change(randomData($scope.groceryList));
   }
+
   // Remove Item
   $scope.decrementItem = function(entry) {
     entry.amount --;
