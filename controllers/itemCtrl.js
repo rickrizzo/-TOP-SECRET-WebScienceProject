@@ -4,16 +4,10 @@ module.exports = {
 	findOrCreate: function(req, res){	
 		itemModel.findOne({'api_id':req.api_id},function(err, found){
 			if(err){
-				return res.status(500).json({
-					message: 'Error finding food item',
-					error: err
-				});
+				return err;
 			} else{
 				if(found){
-					return res.json({
-						message: 'found',
-						_id: found._id
-					})
+					return found._id;
 				}else{
 					var item = new itemModel({
 						api_id: req.api_id,
@@ -29,15 +23,9 @@ module.exports = {
 
 					item.save(function(err, newitem){
 						if(err){
-							return res.status(500).json({
-								message: 'Error saving food item',
-								error: err
-							});
+							return err;
 						}
-						return res.json({
-							message: 'saved',
-							_id: newitem._id
-						});
+						return newitem._id;
 					});	
 				}
 			}

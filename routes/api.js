@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
+var itemCtrl = require('../controllers/itemCtrl');
+var loginCtrl = require('../controllers/loginCtrl');
 
 var apikeys = ['c7cIi88CYsXPaT1sxqhLSLz2OaROEEOdjFFHff79', 'BD5eu8hQLzoGG2jmEjkF4EBhT9HU4uEeJcjFz9oW', 'CSnXW6BKcazu7RgncwWKqLCGzodQNDxWLm1Q0VP3'];
 
@@ -66,8 +68,8 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
           return_data[nutrients[item]["name"]] = nutrients[item]["measures"][0]["value"];
         }
       }
-      
       res.send(return_data);
+      itemCtrl.findOrCreate({api_id: food, nutrition: return_data}, res);
     }
     else {
       console.log("Error in get_nutrition: " + error);
