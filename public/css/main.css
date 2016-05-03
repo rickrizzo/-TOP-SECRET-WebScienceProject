@@ -7,6 +7,7 @@
   * Buttons
   * Forms
   * Search Results
+  * Home Page
 */
 .home {
   color: white;
@@ -28,6 +29,11 @@ body {
   margin: 0 auto;
   font-family: 'Open Sans', sans-serif;
   max-width: 1000px; }
+  @media (max-width: 414px) {
+    body {
+      min-height: 400px;
+      margin-bottom: 50px;
+      clear: both; } }
 
 header {
   text-align: center;
@@ -70,6 +76,12 @@ nav {
     background-color: #07E842; }
   nav #login.active, nav #login.active:hover {
     background-color: #A900FF; }
+  @media (max-width: 414px) {
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%; } }
 
 button {
   color: white;
@@ -111,7 +123,8 @@ form {
     background-color: #FF003B;
     color: white;
     line-height: 2em;
-    padding: 1em; }
+    padding: 1em;
+    margin: 1em; }
     #results ul li.selected {
       background-color: black; }
     #results ul li section {
@@ -123,46 +136,13 @@ form {
   text-align: center;
   margin: 1em 0; }
 
-/* CHART */
-
 .chart div {
   font: 10px sans-serif;
   background-color: steelblue;
   text-align: right;
   padding: 3px;
   margin: 1px;
-  color: white; 
-  height: 400px;
-}
+  color: white; }
 
-svg {
-  width: 100%;
-  height: 400px;
-}
-
-path.slice{
-  stroke-width:2px;
-}
-
-polyline{
-  opacity: .3;
-  stroke: black;
-  stroke-width: 2px;
-  fill: none;
-}
-
-.center {
-    margin: auto;
-    border: 3px solid #07E842;
-    padding: 10px;}
-  .center li{
-      list-style-type: none;
-      color:#07E842;
-      line-height: 2em;
-      background-color: white;
-      text-align: center;
-      border: 3px solid white;
-      margin-bottom:10px;
-      line-height: 2em;
-    }  
-
+article {
+  margin: 0 1em; }
