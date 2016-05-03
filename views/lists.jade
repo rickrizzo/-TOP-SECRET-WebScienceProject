@@ -8,6 +8,10 @@ div(ng-controller="listCtrl")
 
   // Search Results
   section(id='results')
+
+    // No Results
+    div(ng-show='noresults')
+      h2 No Results
     
     // Page Controls
     div(class='pagectrl' ng-hide='numPages() == 0')
@@ -26,19 +30,20 @@ div(ng-controller="listCtrl")
       button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
 
   // Nutrition Chart
-  div(class='chart')
+  div(class='chart' ng-show='!isEmpty(groceryList)')
 
   // Ingredients
-  h2 Foods
-  ul
-    li(ng-repeat='item in groceryList') 
-      p {{item.food}} {{item.amount}}
-      button(ng-click='incrementItem(item)') +
-      button(ng-click='decrementItem(item)') -
+  div(ng-show='!isEmpty(groceryList)')
+    h2 Foods
+    ul
+      li(ng-repeat='item in groceryList') 
+        p {{item.food}} {{item.amount}}
+        button(ng-click='incrementItem(item)') +
+        button(ng-click='decrementItem(item)') -
 
 
   // Nutritional Information
-  section
+  section(ng-show='!isEmpty(groceryList)')
     h2 Nutritional Summary
     p Calories {{ sumNutrition('Energy') }}
     p Carbohydtates {{ sumNutrition('Carbohydrates') }}

@@ -11,6 +11,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.currentPage = 0;
   $scope.pageSize = 10;
   $scope.entries = [];
+  $scope.noresults = false;
   $scope.numPages = function() {
     return Math.ceil($scope.entries.length / $scope.pageSize);
   }
@@ -23,6 +24,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
     // Add Items
   	$http.get('/api/get_food/' + food).then(function(response) {
+      $scope.noresults = false;
       for(var food in response.data) {
         $scope.entries.push({ 
           food : food,
@@ -33,7 +35,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         });
       }
     }, function(response) {
-      console.log(response);
+      $scope.noresults = true;
     });
   };
 
@@ -42,6 +44,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
     // If Never Added
     if(entry.added == null) {
+      entry.added = true;
       $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
         entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
         entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
@@ -49,7 +52,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
         entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
         entry.amount = 1;
-        entry.added = true;
         $scope.groceryList[entry.id] = entry;
         change(randomData($scope.groceryList));
         listService.setEntries($scope.groceryList);
@@ -73,11 +75,22 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     }
   }
 
+  // Grocery List Size
+  $scope.isEmpty = function(obj) {
+    for (key in obj) {
+      if(obj.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // Add Item
   $scope.incrementItem = function(entry) {
     entry.amount ++;
     change(randomData($scope.groceryList));
   }
+
   // Remove Item
   $scope.decrementItem = function(entry) {
     entry.amount --;

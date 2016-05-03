@@ -1,3 +1,7 @@
 header.login
   h1= title
   p We add value to your groceries
+  //Authenticate with facebook
+  form
+    button(ng-click='facebook()') Log in with Facebook
+  p#response
