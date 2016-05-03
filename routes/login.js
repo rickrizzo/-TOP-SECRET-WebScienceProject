@@ -11,12 +11,9 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 passport.use(new FacebookStrategy({
-    clientID: '224186357961980',
-    clientSecret: '86b51ea6f216498714daff1ef7569659',
-    callbackURL: "http://localhost:3000/fb_login/auth/facebook/callback"
-    // clientID: '176656516048298',
-    // clientSecret: 'ce8c2e497fe9da446b6ddfd284dcb26e',
-    // callbackURL: "http://grogro.herokuapp.com/fb_login/auth/facebook/callback"
+    clientID: '176656516048298',
+    clientSecret: 'ce8c2e497fe9da446b6ddfd284dcb26e',
+    callbackURL: "http://grogro.herokuapp.com/fb_login/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
     userModel.findOne({'fb_id':profile.id},function(err, found){
