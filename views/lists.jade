@@ -48,6 +48,7 @@ div(ng-controller="listCtrl")
 
   // Nutritional Information
   section(ng-show='!isEmpty(groceryList)')
+    button(ng-click='saveList()') Save
     h2 Nutritional Summary
     p Calories {{ sumNutrition('Energy') }}
     p Carbohydtates {{ sumNutrition('Carbohydrates') }}
