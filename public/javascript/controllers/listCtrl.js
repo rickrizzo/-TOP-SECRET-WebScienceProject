@@ -4,7 +4,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
-  $scope.groceryList = {};
+  $scope.groceryList = listService.getEntries();
   $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5}  
 
   // Pagination
@@ -29,9 +29,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         $scope.entries.push({ 
           food : food,
           id: response.data[food],
-          nutrition: {},
-          amount: 0,
-          added: null
+          nutrition: null,
+          amount: 0
         });
       }
     }, function(response) {
@@ -41,38 +40,48 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
   // Add Food
   $scope.toggleFood = function(entry) {
-
-    // If Never Added
-    if(entry.added == null) {
-      entry.added = true;
-      $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
-        entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
-        entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
-        entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
-        entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
-        entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
-        entry.amount = 1;
-        $scope.groceryList[entry.id] = entry;
-        change(randomData($scope.groceryList));
-        listService.setEntries($scope.groceryList);
-      });
-    }
-
-    // If Added
-    else if(entry.added) {
-      entry.added = false;
+    // Entry in Grocery List
+    if(entry.id in $scope.groceryList) {
       entry.amount = 0;
       delete $scope.groceryList[entry.id];
       change(randomData($scope.groceryList));
+
+    // Entry not in List
+    } else {
+      entry.amount = 1;
+
+      // Never Added
+      if(!entry.nutrition) {
+        entry.nutrition = {};
+        $scope.groceryList[entry.id] = entry;
+        $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
+          entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
+          entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
+          entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
+          entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
+          entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
+          entry.amount = 1;
+          $scope.groceryList[entry.id] = entry;
+          change(randomData($scope.groceryList));
+        });
+
+      // Pre Exisitng Entry
+      } else {
+        $scope.groceryList[entry.id] = entry;
+        change(randomData($scope.groceryList));
+      }
     }
 
-    // If Removed
-    else if(!entry.added) {
-      entry.added = true;
-      entry.amount = 1;
-      $scope.groceryList[entry.id] = entry;
-      change(randomData($scope.groceryList));
+    // Update Service
+    listService.setEntries($scope.groceryList);
+  }
+
+  // In Grocery List
+  $scope.inGroceryList = function(entry) {
+    if(entry.id in $scope.groceryList) {
+      return true;
     }
+    return false;
   }
 
   // Grocery List Size
@@ -95,7 +104,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.decrementItem = function(entry) {
     entry.amount --;
     if(entry.amount <= 0) {
-      entry.added = false;
       entry.amount = 0;
       delete $scope.groceryList[entry.id];
     }
