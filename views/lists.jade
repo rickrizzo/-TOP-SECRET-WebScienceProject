@@ -24,7 +24,7 @@ div(ng-controller="listCtrl")
     
     // Search Results
     ul
-      li(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize' ng-click='toggleFood(entry)' ng-class='{true: "selected"}[entry.added]') {{entry.food}}
+      li(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize' ng-click='toggleFood(entry)' ng-class='{true: "selected"}[inGroceryList(entry)]') {{entry.food}}
     
     // Page Controls
     div(class='pagectrl' ng-hide='numPages() == 0')
