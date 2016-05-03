@@ -158,11 +158,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   function randomData (groceryList){
     var labels = color.domain();
     return labels.map(function(label){
-      var value = 0
-      for (var entry in groceryList) {
-        value += groceryList[entry]["nutrition"][label] * groceryList[entry].amount;
-      }
-
+      var value = $scope.sumNutrition(label);
       return { label: label, value: value }
     });
   }

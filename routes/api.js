@@ -90,6 +90,17 @@ router.get('/get_list/:list', function(req, res, next) {
   res.send('gets a users list');
 });
 
+router.post('/create_list', function(req, res, next) {
+  var list = req.body.list;
+  var name = req.body.name;
+  listCtrl.findOrCreate({name: name, user_id: req.cookies.user});
+  for (var item in list) {
+    console.log(list[item]["id"]);
+    listCtrl.addItem({name: name, api_id: list[item]["id"], user_id: req.cookies.user});
+  }
+  res.send('added list to db');
+});
+
 router.get('/update_list/:list', function(req, res, next) {
   var list = req.params.list;
   res.send('updates a users list');
