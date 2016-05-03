@@ -1,8 +1,11 @@
+header.lists
+  h1 Search
+  p What are you going to eat?
+
 div(ng-controller="listCtrl")
   
   // Input Food
   form.lists
-    h2 What are you going to eat?
     input(type='text' ng-model='query.text' required)
     button(ng-click='getFood()') Search
 
