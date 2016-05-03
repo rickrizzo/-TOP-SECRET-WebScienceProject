@@ -7,6 +7,12 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.groceryList = listService.getEntries();
   $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5}  
 
+  // Clear Query
+  $scope.clearSearch = function() {
+    $scope.query.text.length = 0;
+    $scope.entries.length = 0;
+  }
+
   // Pagination
   $scope.currentPage = 0;
   $scope.pageSize = 10;
