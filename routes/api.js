@@ -93,6 +93,7 @@ router.get('/get_list/:list', function(req, res, next) {
 router.post('/create_list', function(req, res, next) {
   var list = req.body.list;
   var name = req.body.name;
+  console.log(req.cookies.user);
   listCtrl.findOrCreate({name: name, user_id: req.cookies.user});
   for (var item in list) {
     console.log(list[item]["id"]);
