@@ -80,14 +80,16 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
 router.get('/add_list/:list/:food_id', function(req, res, next) {
   var food_id = req.params.food_id;
   var list = req.params.list;
-  listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user});
-  res.send('adds a food to the users list');
+  listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user}, res);
 });
 
 router.get('/get_list/:list', function(req, res, next) {
   var list_name = req.params.list;
-  listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
-  res.send('gets a users list');
+  listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user},res);
+});
+
+router.get('/show_lists', function(req, res,next){
+  listCtrl.showAllLists({user_id: req.cookies.user}, res);
 });
 
 router.post('/create_list', function(req, res, next) {

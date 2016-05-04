@@ -7,7 +7,7 @@ module.exports = {
 				return false
 			} else{
 				if(found){
-					return found;
+					res.send(found);
 				}else{
 					var user = new userModel({
 						fb_id: req.profile.id,
@@ -16,7 +16,7 @@ module.exports = {
 					});
 
 					user.save(function(err, newuser){
-						return newuser;
+						res.send(newuser);
 					});	
 				}
 			}

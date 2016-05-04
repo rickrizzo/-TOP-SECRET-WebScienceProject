@@ -9,7 +9,7 @@ module.exports = {
 				return null;
 			} else{
 				if(found){
-					return found;
+					return res.send(JSON.stringify(found));
 				}else{
 					var list = new listModel({
 						user_id: req.user_id,
@@ -18,14 +18,14 @@ module.exports = {
 					});
 					userCtrl.addList({list_id: req.name, user_id: req.user_id});
 					list.save(function(err, newlist){
-						return newlist;
+						return res.send(JSON.stringify(newlist));
 					});	
 				}
 			}
 		});
 	},
 	addItem: function(req, res){
-		this.findOrCreate({'name':req.name, 'user_id': req.user_id});
+		this.findOrCreate({'name':req.name, 'user_id': req.user_id}, res);
 		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
 			if(err){
 				return null;
@@ -42,9 +42,9 @@ module.exports = {
 		listModel.find({'user_id': req.user_id}, function(err, lists){
 			var allLists = {}
 			lists.forEach(function(list){
-				allLists[list._id] = list;
+				allLists[list._id] = list.items;
 			});
-			res.send(allLists);
+			res.send(JSON.stringify(allLists));
 		});
 	},
 	delete: function(req,res){
