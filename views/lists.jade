@@ -7,7 +7,7 @@ div(ng-controller="listCtrl")
   // Input Food
   form.lists
     input(type='text' ng-model='query.text' required)
-    input(type='reset' value='X' ng-click='clearSearch()')
+    //input(type='reset' value='X' ng-click='clearSearch()')
     button(ng-click='getFood()') Search
 
   // Search Results
@@ -34,10 +34,10 @@ div(ng-controller="listCtrl")
       button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
 
   // Nutrition Chart
-  div(class='chart' ng-show='!isEmpty(groceryList)')
+  div(class='chart')
 
   // Ingredients
-  div(ng-show='!isEmpty(groceryList)')
+  div()
     h2 Foods
     ul
       li(ng-repeat='item in groceryList') 
@@ -50,8 +50,8 @@ div(ng-controller="listCtrl")
   section(ng-show='!isEmpty(groceryList)')
     button(ng-click='saveList()') Save
     h2 Nutritional Summary
-    p Calories {{ sumNutrition('Energy') }}
-    p Carbohydtates {{ sumNutrition('Carbohydrates') }}
-    p Fat {{ sumNutrition('Fat') | number }}
-    p Fiber {{ sumNutrition('Fiber') }}
-    p Sugar {{ sumNutrition('Sugar') }}
+    p Calories {{ sumNutrition('Energy') | number:0 }}
+    p Carbohydtates {{ sumNutrition('Carbohydrates') | number:0 }}
+    p Fat {{ sumNutrition('Fat') | number:0 }}
+    p Fiber {{ sumNutrition('Fiber') | number:0 }}
+    p Sugar {{ sumNutrition('Sugar') | number:0 }}

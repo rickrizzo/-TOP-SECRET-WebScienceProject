@@ -136,19 +136,9 @@ form {
   text-align: center;
   margin: 1em 0; }
 
-.chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white; 
-  height: 400px;
-}
-
 svg {
-  width: 100%;
-  height: 400px;
+  display: block;
+  margin: auto;
 }
 
 path.slice{
