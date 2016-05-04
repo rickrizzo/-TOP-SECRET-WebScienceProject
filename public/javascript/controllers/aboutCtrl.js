@@ -8,7 +8,7 @@ app.controller('aboutCtrl', function($scope, $routeParams, $http) {
   //$scope.pass = {lname : "TestList"};
   // Get Latest Grocery List
   $scope.getHistory = function(){
-  	 $http.get("/api/get_list", {params: {lname: "TestList"}}).then(function(response) {
+  	 $http.get("/api/get_list").then(function(response) {
               //$scope.allData = response.data;
      console.log(response.data);
               
