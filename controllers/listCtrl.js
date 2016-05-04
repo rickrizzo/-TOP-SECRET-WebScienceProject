@@ -25,13 +25,11 @@ module.exports = {
 		});
 	},
 	addItem: function(req, res){
-		this.findOrCreate({'name':req.name, 'user_id': req.user_id});
 		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
 			if(err){
 				return null;
 			}else{
 				if(found){
-
 					found.items.push(req.api_id);
 					found.save();
 				}
