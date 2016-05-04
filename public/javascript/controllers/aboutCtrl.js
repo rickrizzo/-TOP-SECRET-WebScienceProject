@@ -11,6 +11,7 @@ app.controller('aboutCtrl', function($scope, $routeParams, $http) {
   	 $http.get("/api/get_list", $scope.pass).then(function(response) {
               //$scope.allData = response.data;
      console.log(response.data);
+     console.log("testing");
               
      });
   };
