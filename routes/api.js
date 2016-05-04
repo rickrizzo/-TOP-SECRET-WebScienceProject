@@ -84,10 +84,15 @@ router.get('/add_list/:list/:food_id', function(req, res, next) {
   res.send('adds a food to the users list');
 });
 
-router.get('/get_list/:list', function(req, res, next) {
-  var list_name = req.params.list;
-  listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
-  res.send('gets a users list');
+router.get('/get_list', function(req, res, next) {
+  var list_name = req.query.lname;
+  //console.log(req.query.lname);
+  //console.log("in this function");
+  console.log(req.cookies.user);
+  //console.log(list_name);
+  var hold = listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
+  console.log(hold);
+  res.send(hold);
 });
 
 router.post('/create_list', function(req, res, next) {
