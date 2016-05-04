@@ -6,4 +6,4 @@ section
   ul
     li(ng-repeat='val in mealinfo | limitTo:5:-5')
       | Meal: {{ val.food}} 
-      p Food metrics in Grams: Energy: {{ val.nutrition.Energy}} , Fat: {{ val.nutrition.Fat}} , Carbs: {{ val.nutrition.Carbohydrates}}
+      p Food metrics in Grams: Energy: {{ val.nutrition.Energy  * recommended_nutrition['Energy'] | number:0 }} , Fat: {{ val.nutrition.Fat  * recommended_nutrition['Fat'] | number:0 }} , Carbs: {{ val.nutrition.Carbohydrates  * recommended_nutrition['Carbohydrates'] | number:0 }}
