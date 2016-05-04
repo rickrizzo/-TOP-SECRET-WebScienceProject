@@ -89,10 +89,8 @@ router.get('/get_list', function(req, res, next) {
   //console.log(req.query.lname);
   console.log(req.cookies.user);
   var hold = listCtrl.findOrCreate({name: "TestList", user_id: req.cookies.user});
-  for(val in hold){
-    //res.send(val);
-  }
-  res.send({this: "test", please: "work"});
+  
+  res.send(hold[0]);
   //console.log(hold);
   
 });
