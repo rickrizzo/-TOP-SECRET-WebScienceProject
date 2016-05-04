@@ -136,6 +136,12 @@ form {
   text-align: center;
   margin: 1em 0; }
 
+div.chart {
+  max-width: 1000px;
+  width: auto;
+  height: 400px;
+}
+
 svg {
   display: block;
   margin: auto;

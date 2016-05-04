@@ -132,18 +132,18 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
   // D3 Chart
   var svg = d3.select(".chart > svg")
-  var width = 900,
-      height = 400,
+  var width = 900 * 0.95,
+      height = 400 * 0.95,
       radius = Math.min(width, height) / 2;
 
   if (svg.empty()) {
 
     var svg = d3.select(".chart")
       .append("svg")
-      .attr("width", width)
+      //.attr("width", width)
       .attr("height", height)
-      .attr("viewbox", "0 0 " + Math.min(width, height) + ' ' + Math.min(width, height))
-      .attr("preserveAspectRatio", "xMinYMin")
+      .attr("viewbox", "0 0 " + width + ' ' + height)
+      .attr("preserveAspectRatio", "xMinYMin meet")
       .append("g")
 
     svg.append("g")
@@ -154,16 +154,19 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
       .attr("class", "lines");
   }
 
-  /* Responsive D3 */
-  /*var aspect = width / height;
-  d3.select(window)
-    .on('resize', function() {
-      var targetWidth = svg.node().getBoundingClientRect().width;
-      svg.attr('width', targetWidth / aspect);
-      svg.attr('height', targetWidth / aspect);
-      console.log(targetWidth / aspect);
-      svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-    });*/
+  function getWidth() {
+    if (self.innerHeight) {
+      return self.innerWidth;
+    }
+
+    if (document.documentElement && document.documentElement.clientWidth) {
+      return document.documentElement.clientWidth;
+    }
+
+    if (document.body) {
+      return document.body.clientWidth;
+    }
+  }
 
   var first_run = true;
 
@@ -172,16 +175,17 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     .value(function(d) {
       return d.value;
     });
-
+  
   var arc = d3.svg.arc()
-    .outerRadius(radius * 0.8)
-    .innerRadius(radius * 0.4);
+  .outerRadius(radius * 0.8)
+  .innerRadius(radius * 0.4);
 
   var outerArc = d3.svg.arc()
-    .innerRadius(radius * 0.9)
-    .outerRadius(radius * 0.9);
+  .innerRadius(radius * 0.9)
+  .outerRadius(radius * 0.9);
 
-  svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  //svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  svg.attr("transform", "translate(" + width / 5.7 + "," + height / 2 + ")");
 
   var key = function(d){ return d.data.label; };
 
@@ -223,7 +227,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
       .remove();
 
     /* ------- TEXT LABELS -------*/
-    var text = svg.select(".labels").selectAll("text")
+    /*var text = svg.select(".labels").selectAll("text")
       .data(pie(data), key);
 
     text.enter()
@@ -260,10 +264,10 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
       });
 
     text.exit()
-      .remove();
+      .remove();*/
 
     /* ------- SLICE TO TEXT POLYLINES -------*/
-    var polyline = svg.select(".lines").selectAll("polyline")
+    /*var polyline = svg.select(".lines").selectAll("polyline")
       .data(pie(data), key);
     
     polyline.enter()
@@ -293,7 +297,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     else {
       setTimeout(function(){
         /* remove text and lines if no data */
-        var HasValue = false;
+        /*var HasValue = false;
 
         for (var entry in data) {
           if (data[entry].value != 0) {
@@ -306,6 +310,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
           polyline.remove();
         }
       }, 700);      
-    }
+    }*/
   };
 });
