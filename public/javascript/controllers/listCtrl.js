@@ -4,8 +4,14 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   // Page Details
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
-  $scope.groceryList = {};
+  $scope.groceryList = listService.getEntries();
   $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5}  
+
+  // Clear Query
+  $scope.clearSearch = function() {
+    $scope.query.text.length = 0;
+    $scope.entries.length = 0;
+  }
 
   // Pagination
   $scope.currentPage = 0;
@@ -29,9 +35,8 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         $scope.entries.push({ 
           food : food,
           id: response.data[food],
-          nutrition: {},
-          amount: 0,
-          added: null
+          nutrition: null,
+          amount: 0
         });
       }
     }, function(response) {
@@ -41,48 +46,58 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
   // Add Food
   $scope.toggleFood = function(entry) {
-
-    // If Never Added
-    if(entry.added == null) {
-      entry.added = true;
-      $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
-        entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
-        entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
-        entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
-        entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
-        entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
-        entry.amount = 1;
-        $scope.groceryList[entry.id] = entry;
-        change(randomData($scope.groceryList));
-        listService.setEntries($scope.groceryList);
-      });
-    }
-
-    // If Added
-    else if(entry.added) {
-      entry.added = false;
+    // Entry in Grocery List
+    if(entry.id in $scope.groceryList) {
       entry.amount = 0;
       delete $scope.groceryList[entry.id];
       change(randomData($scope.groceryList));
-    }
 
-    // If Removed
-    else if(!entry.added) {
-      entry.added = true;
+    // Entry not in List
+    } else {
       entry.amount = 1;
-      $scope.groceryList[entry.id] = entry;
-      change(randomData($scope.groceryList));
-    }
-  }
 
-  // Grocery List Size
-  $scope.isEmpty = function(obj) {
-    for (key in obj) {
-      if(obj.hasOwnProperty(key)) {
-        return false;
+      // Never Added
+      if(!entry.nutrition) {
+        entry.nutrition = {};
+        $scope.groceryList[entry.id] = entry;
+        $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
+
+          // Set Nutrition
+          entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
+          entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
+          entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
+          entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
+          entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
+
+          // Check Input
+          for(var elm in entry.nutrition){
+            if(isNaN(entry.nutrition[elm])) {
+              entry.nutrition[elm] = 0;
+            }
+          }
+
+          // Update Entry
+          $scope.groceryList[entry.id] = entry;
+          change(randomData($scope.groceryList));
+        });
+
+      // Pre Exisitng Entry
+      } else {
+        $scope.groceryList[entry.id] = entry;
+        change(randomData($scope.groceryList));
       }
     }
-    return true;
+
+    // Update Service
+    listService.setEntries($scope.groceryList);
+  }
+
+  // In Grocery List
+  $scope.inGroceryList = function(entry) {
+    if(entry.id in $scope.groceryList) {
+      return true;
+    }
+    return false;
   }
 
   // Add Item
@@ -95,7 +110,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.decrementItem = function(entry) {
     entry.amount --;
     if(entry.amount <= 0) {
-      entry.added = false;
       entry.amount = 0;
       delete $scope.groceryList[entry.id];
     }
@@ -106,17 +120,26 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.sumNutrition = function(category) {
     var total = 0;
     for(var entry in $scope.groceryList) {
-      total += $scope.groceryList[entry].nutrition[category];
+      total += ($scope.groceryList[entry].nutrition[category] * $scope.groceryList[entry].amount);
     }
-    return total;
+    return total * $scope.recommended_nutrition[category];
   }
+
 
   // D3 Chart
   var svg = d3.select(".chart > svg")
+  var width = 900,
+      height = 400,
+      radius = Math.min(width, height) / 2;
+
   if (svg.empty()) {
 
     var svg = d3.select(".chart")
       .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewbox", "0 0 " + Math.min(width, height) + ' ' + Math.min(width, height))
+      .attr("preserveAspectRatio", "xMinYMin")
       .append("g")
 
     svg.append("g")
@@ -127,9 +150,14 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
       .attr("class", "lines");
   }
 
-  var width = 900,
-      height = 400,
-      radius = Math.min(width, height) / 2;
+  /* Responsive D3 */
+  /*var aspect = width / height;
+  d3.select(window)
+    .on('resize', function() {
+      var targetWidth = svg.node().getBoundingClientRect().width;
+      chart.attr('width', targetWidth / aspect);
+      chart.attr('height', targetWidth / aspect);
+    });*/
 
   var first_run = true;
 

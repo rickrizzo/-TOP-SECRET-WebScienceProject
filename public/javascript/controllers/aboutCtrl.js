@@ -10,11 +10,11 @@ app.controller('aboutCtrl', function($scope, $routeParams, listService) {
        var obj = newValue;
     	//console.log(newValue);
    		for (var key in obj) {
-		  if (obj.hasOwnProperty(key)) {
-		    var val = obj[key];
-		    $scope.mealinfo.push(val);
+  		  if (obj.hasOwnProperty(key)) {
+  		    var val = obj[key];
+  		    $scope.mealinfo.push(val);
+  		  }
 		  }
-		}
     }
   }, true);
 
