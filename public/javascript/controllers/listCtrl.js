@@ -5,7 +5,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = listService.getEntries();
-  $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5}  
+  $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5};  
 
   // Clear Query
   $scope.clearSearch = function() {
@@ -100,6 +100,10 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     return false;
   }
 
+  $scope.saveList = function() {
+    $http.post('/api/create_list', {list: $scope.groceryList, name: "TestList"});
+  }
+
   // Add Item
   $scope.incrementItem = function(entry) {
     entry.amount ++;
@@ -122,7 +126,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     for(var entry in $scope.groceryList) {
       total += ($scope.groceryList[entry].nutrition[category] * $scope.groceryList[entry].amount);
     }
-    return total * $scope.recommended_nutrition[category];
+    return total;
   }
 
 
@@ -155,8 +159,10 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   d3.select(window)
     .on('resize', function() {
       var targetWidth = svg.node().getBoundingClientRect().width;
-      chart.attr('width', targetWidth / aspect);
-      chart.attr('height', targetWidth / aspect);
+      svg.attr('width', targetWidth / aspect);
+      svg.attr('height', targetWidth / aspect);
+      console.log(targetWidth / aspect);
+      svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     });*/
 
   var first_run = true;

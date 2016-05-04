@@ -50,8 +50,8 @@ div(ng-controller="listCtrl")
   section(ng-show='!isEmpty(groceryList)')
     button(ng-click='saveList()') Save
     h2 Nutritional Summary
-    p Calories {{ sumNutrition('Energy') | number:0 }}
-    p Carbohydtates {{ sumNutrition('Carbohydrates') | number:0 }}
-    p Fat {{ sumNutrition('Fat') | number:0 }}
-    p Fiber {{ sumNutrition('Fiber') | number:0 }}
-    p Sugar {{ sumNutrition('Sugar') | number:0 }}
+    p Calories {{ sumNutrition('Energy') * recommended_nutrition['Energy'] | number:0 }}
+    p Carbohydtates {{ sumNutrition('Carbohydrates') * recommended_nutrition['Carbohydrates'] | number:0 }}
+    p Fat {{ sumNutrition('Fat') * recommended_nutrition['Fat'] | number:0 }}
+    p Fiber {{ sumNutrition('Fiber') * recommended_nutrition['Fiber'] | number:0 }}
+    p Sugar {{ sumNutrition('Sugar') * recommended_nutrition['Sugar'] | number:0 }}
