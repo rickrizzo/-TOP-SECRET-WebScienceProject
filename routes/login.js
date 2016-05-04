@@ -5,7 +5,7 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var userCtrl = require('../controllers/userCtrl');
 var userModel = require('../models/userModel');
-
+var userID;
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -21,6 +21,7 @@ passport.use(new FacebookStrategy({
         return cb(err, null);
       } else{
         if(found){
+          userID = found.fb_id;
           return cb(err, found);
         }else{
           var user = new userModel({
@@ -30,6 +31,7 @@ passport.use(new FacebookStrategy({
           });
 
           user.save(function(err, user){
+            userID = user.fb_id;
             return cb(err, user);
           }); 
         }
@@ -54,6 +56,7 @@ router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
+    res.cookie('user', userID);
     res.redirect('/#');
   }
 );
