@@ -100,6 +100,10 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     return false;
   }
 
+  $scope.saveList = function() {
+    $http.post('/api/create_list', {list: $scope.groceryList, name: "TestList"});
+  }
+
   // Add Item
   $scope.incrementItem = function(entry) {
     entry.amount ++;
