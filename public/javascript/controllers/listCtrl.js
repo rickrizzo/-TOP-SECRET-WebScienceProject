@@ -61,12 +61,22 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
         entry.nutrition = {};
         $scope.groceryList[entry.id] = entry;
         $http.get('/api/get_nutrition/' + entry.id).then(function(nutrition) {
+
+          // Set Nutrition
           entry.nutrition['Energy'] = parseInt(nutrition.data['Energy']) / $scope.recommended_nutrition["Energy"];
           entry.nutrition['Fat'] = parseInt(nutrition.data['Total lipid (fat)']) / $scope.recommended_nutrition["Fat"];
           entry.nutrition['Carbohydrates'] = parseInt(nutrition.data['Carbohydrate, by difference']) / $scope.recommended_nutrition["Carbohydrates"];
           entry.nutrition['Sugar'] = parseInt(nutrition.data['Sugars, total']) / $scope.recommended_nutrition["Sugar"];
           entry.nutrition['Fiber'] = parseInt(nutrition.data['Fiber, total dietary']) / $scope.recommended_nutrition["Fiber"];
-          entry.amount = 1;
+
+          // Check Input
+          for(var elm in entry.nutrition){
+            if(isNaN(entry.nutrition[elm])) {
+              entry.nutrition[elm] = 0;
+            }
+          }
+
+          // Update Entry
           $scope.groceryList[entry.id] = entry;
           change(randomData($scope.groceryList));
         });
@@ -90,16 +100,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     return false;
   }
 
-  // Grocery List Size
-  $scope.isEmpty = function(obj) {
-    for (key in obj) {
-      if(obj.hasOwnProperty(key)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   // Add Item
   $scope.incrementItem = function(entry) {
     entry.amount ++;
@@ -120,17 +120,26 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   $scope.sumNutrition = function(category) {
     var total = 0;
     for(var entry in $scope.groceryList) {
-      total += $scope.groceryList[entry].nutrition[category];
+      total += ($scope.groceryList[entry].nutrition[category] * $scope.groceryList[entry].amount);
     }
-    return total;
+    return total * $scope.recommended_nutrition[category];
   }
+
 
   // D3 Chart
   var svg = d3.select(".chart > svg")
+  var width = 900,
+      height = 400,
+      radius = Math.min(width, height) / 2;
+
   if (svg.empty()) {
 
     var svg = d3.select(".chart")
       .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewbox", "0 0 " + Math.min(width, height) + ' ' + Math.min(width, height))
+      .attr("preserveAspectRatio", "xMinYMin")
       .append("g")
 
     svg.append("g")
@@ -141,9 +150,14 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
       .attr("class", "lines");
   }
 
-  var width = 900,
-      height = 400,
-      radius = Math.min(width, height) / 2;
+  /* Responsive D3 */
+  /*var aspect = width / height;
+  d3.select(window)
+    .on('resize', function() {
+      var targetWidth = svg.node().getBoundingClientRect().width;
+      chart.attr('width', targetWidth / aspect);
+      chart.attr('height', targetWidth / aspect);
+    });*/
 
   var first_run = true;
 
