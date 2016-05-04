@@ -3,6 +3,7 @@ app.controller('aboutCtrl', function($scope, $routeParams, listService) {
   $scope.name = 'aboutCtrl';
   $scope.params = $routeParams;
   $scope.mealinfo = [];
+  $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5};
 
   // Get Latest Grocery List
   $scope.$watch(function() { return listService.getEntries(); }, function(newValue, oldValue) {
