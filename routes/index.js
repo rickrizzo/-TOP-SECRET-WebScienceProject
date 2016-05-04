@@ -5,7 +5,6 @@ var router = express.Router();
 
 // Get Page Layouts
 router.get('/', function(req, res, next) {
-  // Render Layout
 	res.render('layout', {
 		title: 'Gro Gro',
 		angular: '/modules/angular/angular.min.js',
@@ -25,9 +24,6 @@ router.get('/', function(req, res, next) {
 
 // Render Jade Partials
 router.get('/partials/:name', function(req, res, next) {
-	if(req.params.name == '/#_=_') {
-		req.params.name = '/';
-	}
 	res.render(req.params.name, {
 		title: 'Gro Gro'
 	});

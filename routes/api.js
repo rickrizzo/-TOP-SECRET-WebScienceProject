@@ -80,16 +80,25 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
 router.get('/add_list/:list/:food_id', function(req, res, next) {
   var food_id = req.params.food_id;
   var list = req.params.list;
-  // commented out until I can figure out how to add session to get user_id
-  // listCtrl.addItem({name: list, api_id: food_id, user_id: ??});
+  listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user});
   res.send('adds a food to the users list');
 });
 
 router.get('/get_list/:list', function(req, res, next) {
   var list_name = req.params.list;
-  // commented out until I can figure out how to add session to get user_id
-  //listCtrl.findOrCreate({name: list_name, user_id: ??});
+  listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
   res.send('gets a users list');
+});
+
+router.post('/create_list', function(req, res, next) {
+  var list = req.body.list;
+  var name = req.body.name;
+  listCtrl.findOrCreate({name: name, user_id: req.cookies.user});
+  for (var item in list) {
+    console.log(list[item]["id"]);
+    listCtrl.addItem({name: name, api_id: list[item]["id"], user_id: req.cookies.user});
+  }
+  res.send('added list to db');
 });
 
 router.get('/update_list/:list', function(req, res, next) {
@@ -99,8 +108,7 @@ router.get('/update_list/:list', function(req, res, next) {
 
 router.get('/del_list/:list', function(req, res, next) {
   var list = req.params.list;
-  // commented out until I can figure out how to add session to get user_id
-  //listCtrl.delete({name: list_name, user_id: ??});
+  listCtrl.delete({name: list_name, user_id: req.cookies.user});
   res.send('deletes a users list');
 });
 
