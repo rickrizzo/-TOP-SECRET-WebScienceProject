@@ -42,7 +42,7 @@ module.exports = {
 			lists.forEach(function(list){
 				allLists[list._id] = list;
 			});
-			res.send(allLists);
+			return allLists;
 		});
 	},
 	delete: function(req,res){
