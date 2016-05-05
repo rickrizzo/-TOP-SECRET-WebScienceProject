@@ -91,11 +91,13 @@ router.get('/get_item/:id', function(req, res, next){
 router.get('/add_list/:list/:food_id', function(req, res, next) {
   var food_id = req.params.food_id;
   var list = req.params.list;
-  listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user});
-  res.send('adds a food to the users list');
+  listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user}, res);
 });
 var hold = [];
 
+router.get('/show_lists', function(req, res,next){
+  listCtrl.showAllLists({user_id: req.cookies.user}, res);
+});
 
 router.get('/get_list', function(req, res, next) {
   listCtrl.findOrCreate({name: "TestList", user_id: req.cookies.user},res);

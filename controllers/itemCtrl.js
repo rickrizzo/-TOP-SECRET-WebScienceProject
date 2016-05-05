@@ -7,7 +7,7 @@ module.exports = {
 				return err;
 			} else{
 				if(found){
-					if(res) return res.send(JSON.stringify(found));
+					return res.send(JSON.stringify(found));
 				}else if(req.nutrition) {
 					var item = new itemModel({
 						api_id: req.api_id,
@@ -27,6 +27,8 @@ module.exports = {
 						}
 						if(res) return res.send(JSON.stringify(newitem));
 					});	
+				} else{
+					if(res) return res.send(JSON.stringify(found));
 				}
 			}
 		});

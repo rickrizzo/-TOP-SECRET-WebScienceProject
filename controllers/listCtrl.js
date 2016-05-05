@@ -29,6 +29,7 @@ module.exports = {
 		});
 	},
 	addItem: function(req, res){
+		this.findOrCreate({'name':req.name, 'user_id': req.user_id}, res);
 		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
 			if(err){
 				return null;
@@ -44,9 +45,9 @@ module.exports = {
 		listModel.find({'user_id': req.user_id}, function(err, lists){
 			var allLists = {}
 			lists.forEach(function(list){
-				allLists[list._id] = list;
+				allLists[list._id] = list.items;
 			});
-			res.send(allLists);
+			res.send(JSON.stringify(allLists));
 		});
 	},
 	delete: function(req,res){

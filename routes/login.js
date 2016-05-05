@@ -63,5 +63,19 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', { failur
   }
 );
 
+router.get('/isloggedin', function(req, res){
+  if(req.cookies.user){
+    userModel.find({'fb_id': req.cookies.user}, function(err, user){
+      console.log(user);
+      res.send(JSON.stringify(user));
+    });
+  }
+});
+
+router.get('/logout', function(req, res){
+  res.clearCookie('user');
+  req.logout();
+  res.redirect('/#');
+});
 
 module.exports = router;
