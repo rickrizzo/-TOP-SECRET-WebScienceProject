@@ -9,6 +9,7 @@
   * Search Results
   * Results Chart
   * Nutrition Data
+  * Food List
   * Home Page
 */
 .home {
@@ -91,8 +92,12 @@ button {
   border: none;
   line-height: 2em;
   font-size: 1em; }
-  button:hover {
+  button.listbtn:hover {
     color: #FF003B; }
+  button.aboutbtn:hover {
+    color: #07E842; }
+  button.loginbtn:hover {
+    color: #A900FF; }
   button:focus {
     outline: 0; }
 
@@ -115,6 +120,13 @@ form {
       @media (min-width: 768px) {
         form input[type=text] {
           width: 20em; } }
+    form input[type=reset] {
+      background-color: white;
+      border: none;
+      padding: 0;
+      position: relative;
+      left: -20px;
+      font-size: 1em; }
 
 #results ul {
   list-style: none;
@@ -185,6 +197,18 @@ ul.legend li {
     float: right; }
     ul.legend li p {
       font-size: 0.5em; } }
+
+#summary {
+  margin: 0 1em; }
+  #summary #foodList ul {
+    list-style: none; }
+    #summary #foodList ul li button:first-child {
+      margin-left: 1em; }
+    #summary #foodList ul li button {
+      padding: 1em; }
+      @media (min-width: 768px) {
+        #summary #foodList ul li button {
+          padding: 0 0.5em; } }
 
 article {
   margin: 0 1em; }

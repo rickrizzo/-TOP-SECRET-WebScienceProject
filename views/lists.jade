@@ -4,12 +4,37 @@ header.lists
 
 div(ng-controller="listCtrl")
   
+  // Search Form
+  form.lists
+      input(type='text' ng-model='query.text' required)
+      input(type='reset' value='X' ng-click='clearSearch()' ng-show='query.text.length > 0')
+      button(class='listbtn' ng-click='getFood()') Search
+
+  // Search Results
+  section(id='results')
+
+    // No Results
+    div(ng-show='noresults')
+      h2 No Results
+    
+    // Page Controls
+    div(class='pagectrl' ng-hide='numPages() == 0')
+      button(class='listbtn' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
+      span {{ currentPage + 1 }} / {{ numPages() }}
+      button(class='listbtn' ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
+    
+    // Search Results
+    ul
+      li(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize' ng-click='toggleFood(entry)' ng-class='{true: "selected"}[inGroceryList(entry)]') {{entry.food}}
+    
+    // Page Controls
+    div(class='pagectrl' ng-hide='numPages() == 0')
+      button(class='listbtn' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
+      span {{ currentPage + 1 }} / {{ numPages() }}
+      button(class='listbtn' ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
+  
   // Input Food
   section(id='summary')
-    form.lists
-      input(type='text' ng-model='query.text' required)
-      //input(type='reset' value='X' ng-click='clearSearch()')
-      button(ng-click='getFood()') Search
 
     // Nutrition Chart
     div(class='chart')
@@ -26,34 +51,11 @@ div(ng-controller="listCtrl")
           p {{ sumNutrition('Fiber') * recommended_nutrition['Fiber'] | number:0 }} Fiber
 
     // Ingredients
-    div
+    div(id='foodList')
       h2 Foods
       ul
         li(ng-repeat='item in groceryList') 
-          p {{item.food}} {{item.amount}}
-          button(ng-click='incrementItem(item)') +
-          button(ng-click='decrementItem(item)') -
-      button(ng-click='saveList()') Save
-
-  // Search Results
-  section(id='results')
-
-    // No Results
-    div(ng-show='noresults')
-      h2 No Results
-    
-    // Page Controls
-    div(class='pagectrl' ng-hide='numPages() == 0')
-      button(ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
-      span {{ currentPage + 1 }} / {{ numPages() }}
-      button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
-    
-    // Search Results
-    ul
-      li(ng-repeat='entry in entries | pages:currentPage * pageSize | limitTo:pageSize' ng-click='toggleFood(entry)' ng-class='{true: "selected"}[inGroceryList(entry)]') {{entry.food}}
-    
-    // Page Controls
-    div(class='pagectrl' ng-hide='numPages() == 0')
-      button(ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
-      span {{ currentPage + 1 }} / {{ numPages() }}
-      button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
+          {{item.food}} x {{item.amount}}
+          button(class='listbtn' ng-click='incrementItem(item)') +
+          button(class='listbtn' ng-click='decrementItem(item)') -
+      button(class='listbtn' ng-click='saveList()') Save
