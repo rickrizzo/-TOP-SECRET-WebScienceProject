@@ -8,14 +8,13 @@ app.controller('loginCtrl', function($scope, $routeParams, $http, $window) {
   $scope.facebook = function(){
   	$window.location = 'http://' + $window.location.host + '/fb_login/auth/facebook';
   };
-  console.log('hello?')
 
   $http.get('/fb_login/isloggedin').then(function(res){
-    console.log("MAKING REQUEST");
     if(res){
       $scope.loggedin = true;
-      console.log(document.getElementById('login').value);
+      $scope.heading = 'Hello, ' + res.data[0].name;
     } else {
+      $scope.loggedin = false;
       console.log("nothing");
     }
   });
