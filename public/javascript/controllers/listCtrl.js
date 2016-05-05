@@ -1,5 +1,5 @@
 // List Page Controller
-app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
+app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anchorScroll, listService) {
   
   // Page Details
   $scope.name = 'listCtrl';
@@ -27,6 +27,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     $scope.entries.length = 0;
     var food = $scope.query.text;
     var tmp = []
+    $location.hash('results');
 
     // Add Items
   	$http.get('/api/get_food/' + food).then(function(response) {
@@ -42,6 +43,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
     }, function(response) {
       $scope.noresults = true;
     });
+    $anchorScroll();
   };
 
   // Add Food
