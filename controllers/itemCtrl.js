@@ -1,13 +1,16 @@
 var itemModel = require('../models/itemModel');
 
 module.exports = {
-	findOrCreate: function(req, res){	
-		itemModel.findOne({'api_id':req.api_id},function(err, found){
+	findOrCreate: function(req, callback){	
+		itemModel.findOne({'api_id':req.api_id}).lean().exec(function(err, found){
+			var hold;
 			if(err){
-				return err;
+				err;
 			} else{
 				if(found){
-					return found._id;
+					//console.dir(found);
+					//hold = found;
+					callback(err, found);
 				}else{
 					var item = new itemModel({
 						api_id: req.api_id,
@@ -23,9 +26,9 @@ module.exports = {
 
 					item.save(function(err, newitem){
 						if(err){
-							return err;
+							err;
 						}
-						return newitem._id;
+						callback(err, found);
 					});	
 				}
 			}

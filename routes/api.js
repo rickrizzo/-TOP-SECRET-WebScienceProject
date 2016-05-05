@@ -88,22 +88,43 @@ router.get('/add_list/:list/:food_id', function(req, res, next) {
   listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user});
   res.send('adds a food to the users list');
 });
-var hold = [];
+var itemCtrl = require('../controllers/itemCtrl');
 router.get('/get_list', function(req, res, next) {
   //var list_name = req.query.lname;
-  
+
   //console.log(req.cookies.user);
   //var hold = listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
   //console.log("barbies");
+ 
   listCtrl.findOrCreate({name: "TestList", user_id: "10206777015289368"}, function(err, result){
+  var pass = [];
+   //var itemCtrl = require('../controllers/itemCtrl');
+   var userdata = result;
+   var cnt = 0;
+    for(var i = 0; i < userdata.length; i++){
+      //console.log(userdata[val]);
+    
+    itemCtrl.findOrCreate({'api_id': userdata[i]}, function(err, idata){
+             var obj;
+              obj = {"name":idata.name, "nutrition": idata.nutrition};
+              //console.log(obj);
+              pass.push(obj);
+              console.log("====================");
+              console.log(pass);
 
-    console.log(result);
+     
+                 res.send(pass);
+      
+
+    });
+         
+  
+      
+    } //console.log(pass);
+      //console.dir(pass);
+
   });
   
-
-  //console.log(hold);
-  //res.send(hold);
-  //console.log(hold);
 
 });
 

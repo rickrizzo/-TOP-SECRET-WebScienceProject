@@ -3,7 +3,7 @@ var itemCtrl = require('./itemCtrl');
 var userCtrl = require('./userCtrl');
 
 module.exports = {
-	findOrCreate: function(req, res){	
+	findOrCreate: function(req, callback){	
 		listModel.findOne({'name':req.name, 'user_id': req.user_id}).lean().exec(function(err, found){
 			var hold;
 			if(err){
@@ -12,7 +12,7 @@ module.exports = {
 				if(found){
 					hold = found.items;
 					callback(err, hold);
-					console.dir(found.items);
+					//console.dir(found.items);
 					//res.r("/routes/api.js", found.items);
 					//return found._doc.items;
 					 //return "i'm working";
