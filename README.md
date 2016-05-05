@@ -5,8 +5,8 @@ A health conscious grocery list creatd on the MEAN stack, GroGro uses the USDA f
 * `/get_food/:food`  
 Method: GET   
 Makes a request to the USDA database, returns all the food entries matching the query parameter, ordered by relevance.
-* `/get_nutrition/:food_id`
-Method: GET
+* `/get_nutrition/:food_id`  
+Method: GET  
 Makes a request to the USDA database, returns the nutrition infromation based on the food_id
 
 ## Dev Tools
