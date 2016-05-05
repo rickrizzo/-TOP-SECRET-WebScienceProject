@@ -230,6 +230,16 @@ article {
 section#mealLog {
   margin: 0 1em;
   text-align: center; }
-  section#mealLog ul {
+  section#mealLog article {
+    padding: 0;
     text-align: left;
     list-style: none; }
+    @media (min-width: 768px) {
+      section#mealLog article div {
+        text-align: center;
+        width: 280px;
+        margin: 0 1em;
+        float: left;
+        display: inline; }
+        section#mealLog article div hr {
+          display: none; } }

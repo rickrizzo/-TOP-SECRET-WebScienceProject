@@ -330,8 +330,21 @@ article {
 section#mealLog {
 	margin: 0 1em;
 	text-align: center;
-	ul {
+	article {
+		padding: 0;
 		text-align: left;
 		list-style: none;
+		div {
+			@media (min-width: $tablet) {
+				text-align: center;
+				width: 280px;
+				margin: 0 1em;
+				float: left;
+				display: inline;
+				hr {
+					display: none;
+				}
+			}
+		}
 	}
 }
