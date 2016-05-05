@@ -71,6 +71,7 @@ header {
 // Navigation
 nav {
 	font-size: 14px;
+	z-index: 100;
 	ul {
 		list-style: none;
 		padding: 0;
@@ -312,7 +313,6 @@ ul.legend {
 					position: relative;
 					right: 0;
 					padding:  0 1em;
-					z-index: -1;
 					@media (min-width: $tablet) {
 						padding: 0 0.5em;
 					}
