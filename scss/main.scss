@@ -237,6 +237,9 @@ div.chart {
 		float: right;
 		height: 400px;
 	}
+  li {
+  	text-align: left;
+  }
 }
 
 path.slice{
@@ -297,13 +300,13 @@ ul.legend {
 			list-style: none;
 			li {
 				margin-bottom: 1em;
-				button:first-child{
-					margin-left: 1em;
+				button:last-child{
+					margin-right: 1em;
 				}
 				button {
 					position: relative;
 					right: 0;
-					padding: 1em;
+					padding:  0 1em;
 					@media (min-width: $tablet) {
 						padding: 0 0.5em;
 					}

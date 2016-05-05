@@ -166,6 +166,8 @@ div.chart {
     div.chart {
       float: right;
       height: 400px; } }
+  div.chart li {
+    text-align: left; }
 
 path.slice {
   stroke-width: 2px; }
@@ -209,12 +211,12 @@ ul.legend li {
     list-style: none; }
     #summary #foodList ul li {
       margin-bottom: 1em; }
-      #summary #foodList ul li button:first-child {
-        margin-left: 1em; }
+      #summary #foodList ul li button:last-child {
+        margin-right: 1em; }
       #summary #foodList ul li button {
         position: relative;
         right: 0;
-        padding: 1em; }
+        padding: 0 1em; }
         @media (min-width: 768px) {
           #summary #foodList ul li button {
             padding: 0 0.5em; } }
