@@ -1,13 +1,11 @@
 // List Page Controller
-app.controller('listCtrl', function($scope, $routeParams, $http, listService, loginService) {
+app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   
   // Page Details
   $scope.reset = {title: ' '};
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = listService.getEntries();
-  $scope.loggedIn = loginService.getLoginStatus();
-  //console.log(loginService.getLoginStatus());
   $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5};  
 
   // Clear Query
@@ -164,20 +162,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService, lo
       .attr("class", "labels");
     svg.append("g")
       .attr("class", "lines");
-  }
-
-  function getWidth() {
-    if (self.innerHeight) {
-      return self.innerWidth;
-    }
-
-    if (document.documentElement && document.documentElement.clientWidth) {
-      return document.documentElement.clientWidth;
-    }
-
-    if (document.body) {
-      return document.body.clientWidth;
-    }
   }
 
   // returns the values for the pie chart

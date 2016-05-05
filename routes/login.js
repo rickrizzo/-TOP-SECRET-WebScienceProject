@@ -7,13 +7,16 @@ var userCtrl = require('../controllers/userCtrl');
 var userModel = require('../models/userModel');
 var userID;
 
+// Initialize Passport
 router.use(passport.initialize());
 router.use(passport.session());
 
+// Create Facebook Connection
 passport.use(new FacebookStrategy({
     clientID: '176656516048298',
     clientSecret: 'ce8c2e497fe9da446b6ddfd284dcb26e',
     callbackURL: "http://grogro.herokuapp.com/fb_login/auth/facebook/callback"
+    // Local Test App
     // clientID: '225676544479628',
     // clientSecret: '3f8786e6f9bff4d451194146869ff2a8',
     // callbackURL: "http://localhost:3000/fb_login/auth/facebook/callback"
@@ -43,41 +46,39 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+// Serialize to Cookie
 passport.serializeUser(function(user, done) {
-  //place user's id in cookie
   done(null, user.id);
 });
 
+// Retrieve User from DB
 passport.deserializeUser(function(id, done) {
-  //retrieve user from database by id
   userModel.findById(id, function(err, user) {
     done(err, user);
   });
 });
 
+// Authenticate
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
+// Authenitcation Callback
 router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log("USERID", userID);
     res.cookie('user', userID);
     res.redirect('/#');
   }
 );
 
+// Get User
 router.get('/isloggedin', function(req, res){
-  console.log("HERE!!!!");
   if(req.cookies.user){
-    console.log("LOGGED IN");
     userModel.find({'fb_id': req.cookies.user}, function(err, user){
-      console.log(user);
       res.send(JSON.stringify(user));
     });
-  } else {
-    console.log("NOT LOGGED IN");
   }
 });
 
+// Log Out
 router.get('/logout', function(req, res){
   res.clearCookie('user');
   req.logout();

@@ -1,8 +1,13 @@
+// Header
 header.about
   h1 Meal Log
   p Here's what you've searched for this far.
+
+// Meal Log
 section(id='mealLog')
   h3 Recently Added
+  
+  // Display Recently Added
   article
     div(ng-repeat='val in mealinfo | limitTo:5:-5')
       p {{ val.food}}
