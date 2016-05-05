@@ -8,6 +8,7 @@ var apikeys = ['c7cIi88CYsXPaT1sxqhLSLz2OaROEEOdjFFHff79', 'BD5eu8hQLzoGG2jmEjkF
 
 var current_key = 0;
 
+
 // Get Food
 router.get('/get_food/:food', function(req, res, next) {
   var food = req.params.food;
@@ -83,22 +84,19 @@ router.get('/add_list/:list/:food_id', function(req, res, next) {
   listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user});
   res.send('adds a food to the users list');
 });
-
+var hold = [];
 router.get('/get_list', function(req, res, next) {
   //var list_name = req.query.lname;
   
   //console.log(req.cookies.user);
   //var hold = listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
   //console.log("barbies");
-  listCtrl.findOrCreate({name: "TestList", user_id: "572a5023376aa7e0190a2cd4"}, function(err, pass){
-    if(err){
-      console.log(err);
-    }else{
-      console.log(pass)
-    }
+  listCtrl.findOrCreate({name: "TestList", user_id: "10206777015289368"}, function(err, result){
 
+    console.log(result);
   });
   
+
   //console.log(hold);
   //res.send(hold);
   //console.log(hold);
