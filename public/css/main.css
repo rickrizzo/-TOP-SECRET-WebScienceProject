@@ -230,3 +230,6 @@ article {
 section#mealLog {
   margin: 0 1em;
   text-align: center; }
+  section#mealLog ul {
+    text-align: left;
+    list-style: none; }
