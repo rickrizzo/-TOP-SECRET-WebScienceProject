@@ -2,6 +2,7 @@
 app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anchorScroll, listService) {
   
   // Page Details
+  $anchorScroll.yOffset = 400;
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = listService.getEntries();
@@ -40,10 +41,10 @@ app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anc
           amount: 0
         });
       }
+      $anchorScroll();
     }, function(response) {
       $scope.noresults = true;
     });
-    $anchorScroll();
   };
 
   // Add Food
