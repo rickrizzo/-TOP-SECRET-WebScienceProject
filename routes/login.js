@@ -70,5 +70,10 @@ router.get('/isloggedin', function(req, res){
   }
 });
 
+router.get('/logout', function(req, res){
+  res.clearCookie('user');
+  req.logout();
+  res.redirect('/#');
+});
 
 module.exports = router;
