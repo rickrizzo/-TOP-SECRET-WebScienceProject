@@ -85,22 +85,10 @@ router.get('/add_list/:list/:food_id', function(req, res, next) {
   res.send('adds a food to the users list');
 });
 var hold = [];
+
+
 router.get('/get_list', function(req, res, next) {
-  //var list_name = req.query.lname;
-  
-  //console.log(req.cookies.user);
-  //var hold = listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
-  //console.log("barbies");
-  listCtrl.findOrCreate({name: "TestList", user_id: "10206777015289368"}, function(err, result){
-
-    console.log(result);
-  });
-  
-
-  //console.log(hold);
-  //res.send(hold);
-  //console.log(hold);
-
+  listCtrl.findOrCreate({name: "TestList", user_id: req.cookies.user},res);
 });
 
 router.post('/create_list', function(req, res, next) {

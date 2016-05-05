@@ -9,9 +9,8 @@ app.controller('aboutCtrl', function($scope, $routeParams, $http) {
   // Get Latest Grocery List
   $scope.getHistory = function(){
   	 $http.get("/api/get_list").then(function(response) {
-              //$scope.allData = response.data;
-     console.log(response.data);
-              
+        $scope.mealinfo = response.data['items'];
+        console.log(response.data);
      });
   };
  
