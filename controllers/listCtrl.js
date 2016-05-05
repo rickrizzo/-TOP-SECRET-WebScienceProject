@@ -38,10 +38,11 @@ module.exports = {
 	},
 	showAllLists: function(req, res){
 		listModel.find({'user_id': req.user_id}).toArray( function(err, lists){
-			if{err}{
-				return [1,2,3,4];
+			if(err){
+				var pass = [1,2,3,4];
+				return pass;
 			}else{
-				return list;
+				return lists;
 			}
 			//var allLists = {}
 			//lists.forEach(function(list){
