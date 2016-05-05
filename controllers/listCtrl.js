@@ -38,11 +38,16 @@ module.exports = {
 	},
 	showAllLists: function(req, res){
 		listModel.find({'user_id': req.user_id}).toArray( function(err, lists){
+			if{err}{
+				return [1,2,3,4];
+			}else{
+				return list;
+			}
 			//var allLists = {}
 			//lists.forEach(function(list){
 				//allLists[list._id] = list;
 			//});
-			return list;
+			
 		});
 	},
 	delete: function(req,res){
