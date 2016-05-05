@@ -69,7 +69,7 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
         }
       }
       res.send(return_data);
-      itemCtrl.findOrCreate({api_id: food, nutrition: return_data}, res);
+      //itemCtrl.findOrCreate({api_id: food, nutrition: return_data}, res);
     }
     else {
       console.log("Error in get_nutrition: " + error);
@@ -88,9 +88,9 @@ router.get('/get_list', function(req, res, next) {
   var list_name = req.query.lname;
   //console.log(req.query.lname);
   console.log(req.cookies.user);
-  var hold = listCtrl.findOrCreate({name: "TestList", user_id: req.cookies.user});
-
-  res.send(req.cookies.user);
+  var hold = listCtrl.findOrCreate({user_id: "10206777015289368"});
+  console.log(hold);
+  res.send(hold);
   
 });
 

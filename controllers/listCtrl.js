@@ -4,7 +4,7 @@ var userCtrl = require('./userCtrl');
 
 module.exports = {
 	findOrCreate: function(req, res){	
-		listModel.findOne({'name':req.name, 'user_id': req.user_id},function(err, found){
+		listModel.findOne({'user_id': req.user_id},function(err, found){
 			if(err){
 				return null;
 			} else{
@@ -13,7 +13,7 @@ module.exports = {
 				}else{
 					var list = new listModel({
 						user_id: req.user_id,
-						name: req.name,
+						name: "TestList",
 						items: []
 					});
 					userCtrl.addList({list_id: req.name, user_id: req.user_id});
