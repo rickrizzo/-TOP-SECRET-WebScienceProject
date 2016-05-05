@@ -7,7 +7,11 @@
   * Buttons
   * Forms
   * Search Results
+  * Results Chart
+  * Nutrition Data
+  * Food List
   * Home Page
+  * Meal Log
 */
 .home {
   color: white;
@@ -89,8 +93,12 @@ button {
   border: none;
   line-height: 2em;
   font-size: 1em; }
-  button:hover {
+  button.listbtn:hover {
     color: #FF003B; }
+  button.aboutbtn:hover {
+    color: #07E842; }
+  button.loginbtn:hover {
+    color: #A900FF; }
   button:focus {
     outline: 0; }
 
@@ -101,6 +109,9 @@ form {
     form h2 {
       font-size: 2em;
       padding-top: 0.75em; } }
+  form button {
+    position: relative;
+    right: 10px; }
   form input {
     border: white 1px solid;
     line-height: 2em; }
@@ -113,6 +124,13 @@ form {
       @media (min-width: 768px) {
         form input[type=text] {
           width: 20em; } }
+    form input[type=reset] {
+      background-color: white;
+      border: none;
+      padding: 0;
+      position: relative;
+      left: -20px;
+      font-size: 1em; }
 
 #results ul {
   list-style: none;
@@ -136,23 +154,79 @@ form {
   text-align: center;
   margin: 1em 0; }
 
-svg {
-  display: block;
-  margin: auto;
-}
+section#summary {
+  min-height: 500px; }
 
-path.slice{
-  stroke-width:2px;
-}
+div.chart {
+  max-width: 1000px;
+  width: auto;
+  height: 700px;
+  overflow: auto; }
+  div.chart svg {
+    display: block;
+    margin: auto; }
+  @media (min-width: 768px) {
+    div.chart {
+      float: right;
+      height: 400px; } }
+  div.chart li {
+    text-align: left; }
 
-polyline{
+path.slice {
+  stroke-width: 2px; }
+
+polyline {
   opacity: .3;
   stroke: black;
   stroke-width: 2px;
-  fill: none;
-}
+  fill: none; }
 
+ul.legend li {
+  font-size: 1.5em; }
+  ul.legend li.energy {
+    color: #B30000; }
+  ul.legend li.carb {
+    color: #FCCC8A; }
+  ul.legend li.fat {
+    color: #E34A33; }
+  ul.legend li.sugar {
+    color: #FDCC8A; }
+  ul.legend li.fiber {
+    color: #FEF0D9; }
+  ul.legend li p {
+    color: black;
+    line-height: 0.5em;
+    padding: 0; }
 
+@media (min-width: 768px) {
+  ul.legend {
+    float: right; }
+    ul.legend li p {
+      font-size: 0.75em; } }
+
+#summary {
+  margin: 0 1em;
+  text-align: center; }
+  #summary #foodList button {
+    font-size: 1.2em; }
+  #summary #foodList ul {
+    text-align: left;
+    list-style: none; }
+    #summary #foodList ul li {
+      margin-bottom: 1em; }
+      #summary #foodList ul li button:last-child {
+        margin-right: 1em; }
+      #summary #foodList ul li button {
+        position: relative;
+        right: 0;
+        padding: 0 1em; }
+        @media (min-width: 768px) {
+          #summary #foodList ul li button {
+            padding: 0 0.5em; } }
 
 article {
   margin: 0 1em; }
+
+section#mealLog {
+  margin: 0 1em;
+  text-align: center; }

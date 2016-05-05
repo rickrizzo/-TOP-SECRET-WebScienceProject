@@ -4,15 +4,17 @@ var userCtrl = require('./userCtrl');
 
 module.exports = {
 	findOrCreate: function(req, res){	
-		listModel.findOne({'name':req.name, 'user_id': req.user_id},function(err, found){
+		listModel.findOne({'name':req.name, 'user_id': req.user_id}).lean().exec(function(err, found){
+			var hold;
 			if(err){
-				return null;
+				//return "this is not wokring";
 			} else{
 				if(found){
 					return res.send(JSON.stringify(found));
 				}else{
 					var list = new listModel({
 						user_id: req.user_id,
+						created: new Date(),
 						name: req.name,
 						items: []
 					});
@@ -22,6 +24,7 @@ module.exports = {
 					});	
 				}
 			}
+			
 		});
 	},
 	addItem: function(req, res){
@@ -31,7 +34,6 @@ module.exports = {
 				return null;
 			}else{
 				if(found){
-
 					found.items.push(req.api_id);
 					found.save();
 				}

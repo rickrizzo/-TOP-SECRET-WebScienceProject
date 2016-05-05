@@ -8,6 +8,7 @@ var apikeys = ['c7cIi88CYsXPaT1sxqhLSLz2OaROEEOdjFFHff79', 'BD5eu8hQLzoGG2jmEjkF
 
 var current_key = 0;
 
+
 // Get Food
 router.get('/get_food/:food', function(req, res, next) {
   var food = req.params.food;
@@ -65,7 +66,11 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
       return_data["name"] = data.report.food.name;
       for (var item in nutrients) {
         if (interested.indexOf(nutrients[item]["name"]) != -1) {
-          return_data[nutrients[item]["name"]] = nutrients[item]["measures"][0]["value"];
+          if(nutrients[item]["measures"].length <= 0) {
+            return_data[nutrients[item]["name"]] = nutrients[item]["value"];
+          } else {
+            return_data[nutrients[item]["name"]] = nutrients[item]["measures"][0]["value"];
+          }
         }
       }
       res.send(return_data);
@@ -82,6 +87,23 @@ router.get('/add_list/:list/:food_id', function(req, res, next) {
   var list = req.params.list;
   listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user}, res);
 });
+var hold = [];
+router.get('/get_list', function(req, res, next) {
+  //var list_name = req.query.lname;
+  
+  //console.log(req.cookies.user);
+  //var hold = listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
+  //console.log("barbies");
+  listCtrl.findOrCreate({name: "TestList", user_id: "10206777015289368"}, function(err, result){
+
+    console.log(result);
+  });
+  
+
+  //console.log(hold);
+  //res.send(hold);
+  //console.log(hold);
+});
 
 router.get('/get_list/:list', function(req, res, next) {
   var list_name = req.params.list;
@@ -95,6 +117,7 @@ router.get('/show_lists', function(req, res,next){
 router.post('/create_list', function(req, res, next) {
   var list = req.body.list;
   var name = req.body.name;
+  console.log(req.cookies.user);
   listCtrl.findOrCreate({name: name, user_id: req.cookies.user});
   for (var item in list) {
     console.log(list[item]["id"]);
