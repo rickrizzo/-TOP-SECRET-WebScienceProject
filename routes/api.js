@@ -74,12 +74,18 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
         }
       }
       res.send(return_data);
-      itemCtrl.findOrCreate({api_id: food, nutrition: return_data}, res);
+      itemCtrl.findOrCreate({api_id: food, nutrition: return_data});
     }
     else {
       console.log("Error in get_nutrition: " + error);
     }
   });
+});
+
+
+router.get('/get_item/:id', function(req, res, next){
+  var api_id = req.params.id;
+  itemCtrl.findOrCreate({api_id: api_id}, res);
 });
 
 router.get('/add_list/:list/:food_id', function(req, res, next) {

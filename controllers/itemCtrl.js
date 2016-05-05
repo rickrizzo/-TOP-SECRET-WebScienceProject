@@ -7,7 +7,7 @@ module.exports = {
 				return err;
 			} else{
 				if(found){
-					return found._id;
+					if(res) return res.send(JSON.stringify(found));
 				}else{
 					var item = new itemModel({
 						api_id: req.api_id,
@@ -25,7 +25,7 @@ module.exports = {
 						if(err){
 							return err;
 						}
-						return newitem._id;
+						if(res) return res.send(JSON.stringify(newitem));
 					});	
 				}
 			}
