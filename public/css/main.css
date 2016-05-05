@@ -109,7 +109,7 @@ form {
     form h2 {
       font-size: 2em;
       padding-top: 0.75em; } }
-  form button {
+  form.lists button {
     position: relative;
     right: 10px; }
   form input {
