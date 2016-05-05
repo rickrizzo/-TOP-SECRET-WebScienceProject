@@ -142,13 +142,17 @@ section#summary {
   min-height: 500px; }
 
 div.chart {
-  float: right;
   max-width: 1000px;
   width: auto;
-  height: 400px; }
+  height: 800px;
+  overflow: auto; }
   div.chart svg {
     display: block;
     margin: auto; }
+  @media (min-width: 768px) {
+    div.chart {
+      float: right;
+      height: 400px; } }
 
 path.slice {
   stroke-width: 2px; }
@@ -159,25 +163,28 @@ polyline {
   stroke-width: 2px;
   fill: none; }
 
-ul.legend {
-  float: right; }
-  ul.legend li {
-    font-size: 2em; }
-    ul.legend li.energy {
-      color: #B30000; }
-    ul.legend li.carb {
-      color: #E34A33; }
-    ul.legend li.fat {
-      color: #FCCC8A; }
-    ul.legend li.sugar {
-      color: #FDCC8A; }
-    ul.legend li.fiber {
-      color: #FEF0D9; }
+ul.legend li {
+  font-size: 2em; }
+  ul.legend li.energy {
+    color: #B30000; }
+  ul.legend li.carb {
+    color: #E34A33; }
+  ul.legend li.fat {
+    color: #FCCC8A; }
+  ul.legend li.sugar {
+    color: #FDCC8A; }
+  ul.legend li.fiber {
+    color: #FEF0D9; }
+  ul.legend li p {
+    color: black;
+    line-height: 0.5em;
+    padding: 0; }
+
+@media (min-width: 768px) {
+  ul.legend {
+    float: right; }
     ul.legend li p {
-      color: black;
-      font-size: 0.5em;
-      line-height: 0.5em;
-      padding: 0; }
+      font-size: 0.5em; } }
 
 article {
   margin: 0 1em; }
