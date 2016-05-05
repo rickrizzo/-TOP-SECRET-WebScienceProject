@@ -142,7 +142,8 @@ form {
     color: white;
     line-height: 2em;
     padding: 1em;
-    margin: 1em; }
+    margin: 1em;
+    cursor: pointer; }
     #results ul li.selected {
       background-color: black; }
     #results ul li section {
