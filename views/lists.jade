@@ -5,10 +5,35 @@ header.lists
 div(ng-controller="listCtrl")
   
   // Input Food
-  form.lists
-    input(type='text' ng-model='query.text' required)
-    //input(type='reset' value='X' ng-click='clearSearch()')
-    button(ng-click='getFood()') Search
+  section(id='summary')
+    form.lists
+      input(type='text' ng-model='query.text' required)
+      //input(type='reset' value='X' ng-click='clearSearch()')
+      button(ng-click='getFood()') Search
+
+    // Nutrition Chart
+    div(class='chart')
+      ul(class='legend')
+        li(class='energy')
+          p {{ sumNutrition('Energy') * recommended_nutrition['Energy'] | number:0 }} Calories
+        li(class='carb')
+          p {{ sumNutrition('Carbohydrates') * recommended_nutrition['Carbohydrates'] | number:0 }} Carbohydrates
+        li(class='fat')
+          p {{ sumNutrition('Fat') * recommended_nutrition['Fat'] | number:0 }} Fat
+        li(class='sugar')
+          p {{ sumNutrition('Sugar') * recommended_nutrition['Sugar'] | number:0 }} Sugar
+        li(class='fiber')
+          p {{ sumNutrition('Fiber') * recommended_nutrition['Fiber'] | number:0 }} Fiber
+
+    // Ingredients
+    div
+      h2 Foods
+      ul
+        li(ng-repeat='item in groceryList') 
+          p {{item.food}} {{item.amount}}
+          button(ng-click='incrementItem(item)') +
+          button(ng-click='decrementItem(item)') -
+      button(ng-click='saveList()') Save
 
   // Search Results
   section(id='results')
@@ -32,42 +57,3 @@ div(ng-controller="listCtrl")
       button(ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') Previous
       span {{ currentPage + 1 }} / {{ numPages() }}
       button(ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
-
-  // Nutrition Chart
-  div(class='chart')
-    table
-      tr
-        td(bgcolor="#B30000")
-        td Calories
-      tr
-        td(bgcolor="#E34A33")
-        td Carbohydrates
-      tr
-        td(bgcolor="#FCCC8A")
-        td Fat
-      tr
-        td(bgcolor="#FDCC8A")
-        td Sugar
-      tr
-        td(bgcolor="#FEF0D9")
-        td Fiber
-
-  // Ingredients
-  div()
-    h2 Foods
-    ul
-      li(ng-repeat='item in groceryList') 
-        p {{item.food}} {{item.amount}}
-        button(ng-click='incrementItem(item)') +
-        button(ng-click='decrementItem(item)') -
-
-
-  // Nutritional Information
-  section(ng-show='!isEmpty(groceryList)')
-    button(ng-click='saveList()') Save
-    h2 Nutritional Summary
-    p Calories {{ sumNutrition('Energy') * recommended_nutrition['Energy'] | number:0 }}
-    p Carbohydtates {{ sumNutrition('Carbohydrates') * recommended_nutrition['Carbohydrates'] | number:0 }}
-    p Fat {{ sumNutrition('Fat') * recommended_nutrition['Fat'] | number:0 }}
-    p Fiber {{ sumNutrition('Fiber') * recommended_nutrition['Fiber'] | number:0 }}
-    p Sugar {{ sumNutrition('Sugar') * recommended_nutrition['Sugar'] | number:0 }}
