@@ -13,7 +13,7 @@ module.exports = {
 				}else{
 					var list = new listModel({
 						user_id: req.user_id,
-						created: new Date();
+						created: new Date(),
 						name: req.name,
 						items: []
 					});
