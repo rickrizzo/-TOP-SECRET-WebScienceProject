@@ -1,8 +1,9 @@
 header.login
-  h1 Login
-  p Join us!
+  h1 {{heading}}
+  p(ng-show='!loggedin') Join us!
 
 // Facebook Authentication
 form
-  button(class='loginbtn' ng-click='facebook()') Log in with Facebook
+  button(class='loginbtn' ng-click='facebook()' ng-show='loggedin==false') Log in with Facebook
+  button(class='loginbtn' ng-click='logout()' ng-show='loggedin==true') Logout
 p#response

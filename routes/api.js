@@ -108,6 +108,7 @@ router.post('/create_list', function(req, res, next) {
   var name = req.body.name;
   console.log(req.cookies.user);
   listCtrl.findOrCreate({name: name, user_id: req.cookies.user});
+  //listCtrl.findOrCreate(req, res);
   for (var item in list) {
     console.log(list[item]["id"]);
     listCtrl.addItem({name: name, api_id: list[item]["id"], user_id: req.cookies.user});

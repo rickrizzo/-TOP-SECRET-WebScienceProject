@@ -5,6 +5,9 @@ var userCtrl = require('./userCtrl');
 module.exports = {
 	findOrCreate: function(req, res){	
 		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
+			if(!res) {
+				return;
+			}
 			if(err){
 				return err;
 			} else{
