@@ -38,7 +38,6 @@ passport.use(new FacebookStrategy({
         }
       }
     });
-    cb(null, profile);
   }
 ));
 
