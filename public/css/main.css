@@ -11,6 +11,7 @@
   * Nutrition Data
   * Food List
   * Home Page
+  * Meal Log
 */
 .home {
   color: white;
@@ -156,7 +157,7 @@ section#summary {
 div.chart {
   max-width: 1000px;
   width: auto;
-  height: 800px;
+  height: 700px;
   overflow: auto; }
   div.chart svg {
     display: block;
@@ -176,13 +177,13 @@ polyline {
   fill: none; }
 
 ul.legend li {
-  font-size: 2em; }
+  font-size: 1.5em; }
   ul.legend li.energy {
     color: #B30000; }
   ul.legend li.carb {
-    color: #E34A33; }
-  ul.legend li.fat {
     color: #FCCC8A; }
+  ul.legend li.fat {
+    color: #E34A33; }
   ul.legend li.sugar {
     color: #FDCC8A; }
   ul.legend li.fiber {
@@ -196,19 +197,31 @@ ul.legend li {
   ul.legend {
     float: right; }
     ul.legend li p {
-      font-size: 0.5em; } }
+      font-size: 0.75em; } }
 
 #summary {
-  margin: 0 1em; }
+  margin: 0 1em;
+  text-align: center; }
+  #summary #foodList button {
+    font-size: 1.2em; }
   #summary #foodList ul {
+    text-align: left;
     list-style: none; }
-    #summary #foodList ul li button:first-child {
-      margin-left: 1em; }
-    #summary #foodList ul li button {
-      padding: 1em; }
-      @media (min-width: 768px) {
-        #summary #foodList ul li button {
-          padding: 0 0.5em; } }
+    #summary #foodList ul li {
+      margin-bottom: 1em; }
+      #summary #foodList ul li button:first-child {
+        margin-left: 1em; }
+      #summary #foodList ul li button {
+        position: relative;
+        right: 0;
+        padding: 1em; }
+        @media (min-width: 768px) {
+          #summary #foodList ul li button {
+            padding: 0 0.5em; } }
 
 article {
   margin: 0 1em; }
+
+section#mealLog {
+  margin: 0 1em;
+  text-align: center; }

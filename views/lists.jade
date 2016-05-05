@@ -41,10 +41,10 @@ div(ng-controller="listCtrl")
       ul(class='legend')
         li(class='energy')
           p {{ sumNutrition('Energy') * recommended_nutrition['Energy'] | number:0 }} Calories
-        li(class='carb')
-          p {{ sumNutrition('Carbohydrates') * recommended_nutrition['Carbohydrates'] | number:0 }} Carbohydrates
         li(class='fat')
           p {{ sumNutrition('Fat') * recommended_nutrition['Fat'] | number:0 }} Fat
+        li(class='carb')
+          p {{ sumNutrition('Carbohydrates') * recommended_nutrition['Carbohydrates'] | number:0 }} Carbohydrates
         li(class='sugar')
           p {{ sumNutrition('Sugar') * recommended_nutrition['Sugar'] | number:0 }} Sugar
         li(class='fiber')
@@ -55,7 +55,7 @@ div(ng-controller="listCtrl")
       h2 Foods
       ul
         li(ng-repeat='item in groceryList') 
-          {{item.food}} x {{item.amount}}
           button(class='listbtn' ng-click='incrementItem(item)') +
           button(class='listbtn' ng-click='decrementItem(item)') -
+          span {{item.amount}} X {{item.food | limitTo:40}}
       button(class='listbtn' ng-click='saveList()') Save
