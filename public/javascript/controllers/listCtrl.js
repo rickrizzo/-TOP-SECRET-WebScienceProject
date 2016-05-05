@@ -2,6 +2,7 @@
 app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   
   // Page Details
+  $scope.reset = {title: ' '};
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = listService.getEntries();
@@ -46,6 +47,11 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
   // Add Food
   $scope.toggleFood = function(entry) {
+    // Create Grocery List
+    if(!$scope.groceryList) {
+      $scope.groceryList = {};
+    }
+
     // Entry in Grocery List
     if(entry.id in $scope.groceryList) {
       entry.amount = 0;
@@ -94,7 +100,10 @@ app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
 
   // In Grocery List
   $scope.inGroceryList = function(entry) {
-    if(entry.id in $scope.groceryList) {
+    if(!$scope.groceryList) {
+      return false;
+    }
+     else if(entry.id in $scope.groceryList) {
       return true;
     }
     return false;

@@ -109,6 +109,9 @@ form {
     form h2 {
       font-size: 2em;
       padding-top: 0.75em; } }
+  form button {
+    position: relative;
+    right: 10px; }
   form input {
     border: white 1px solid;
     line-height: 2em; }

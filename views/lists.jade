@@ -7,7 +7,7 @@ div(ng-controller="listCtrl")
   // Search Form
   form.lists
       input(type='text' ng-model='query.text' required)
-      input(type='reset' value='X' ng-click='clearSearch()' ng-show='query.text.length > 0')
+      input(type='reset' value='X' ng-click='clearSearch()')
       button(class='listbtn' ng-click='getFood()') Search
 
   // Search Results
@@ -34,7 +34,7 @@ div(ng-controller="listCtrl")
       button(class='listbtn' ng-disabled='currentPage >= entries.length/pageSize - 1' ng-click='currentPage = currentPage + 1') Next
   
   // Input Food
-  section(id='summary')
+  section(id='summary' ng-show='groceryList')
 
     // Nutrition Chart
     div(class='chart')
@@ -51,11 +51,11 @@ div(ng-controller="listCtrl")
           p {{ sumNutrition('Fiber') * recommended_nutrition['Fiber'] | number:0 }} Fiber
 
     // Ingredients
-    div(id='foodList')
+    div(id='foodList' ng-show='groceryList')
       h2 Foods
       ul
         li(ng-repeat='item in groceryList') 
           button(class='listbtn' ng-click='incrementItem(item)') +
           button(class='listbtn' ng-click='decrementItem(item)') -
           span {{item.amount}} X {{item.food | limitTo:40}}
-      button(class='listbtn' ng-click='saveList()') Save
+      button(class='listbtn' ng-click='saveList()' ng-show) Save
