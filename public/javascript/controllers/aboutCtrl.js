@@ -7,7 +7,6 @@ app.controller('aboutCtrl', function($scope, $routeParams, $http) {
 
   //$scope.pass = {lname : "TestList"};
   // Get Latest Grocery List
-  $scope.getHistory = function(){
   	 $http.get("/api/get_list").then(function(response) {
         //$scope.mealinfo = response.data['items'];
         var vals = [];
@@ -26,7 +25,5 @@ app.controller('aboutCtrl', function($scope, $routeParams, $http) {
         });
         $scope.mealinfo = vals;
      });
-  };
- 
 
 });

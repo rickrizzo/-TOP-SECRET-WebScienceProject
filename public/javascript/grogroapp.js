@@ -11,3 +11,22 @@ app.service('listService', function() {
     }
   };
 });
+
+app.service('loginService', function() {
+  var loggedIn = false;
+  var name = '';
+  return {
+    setLoginStatus: function(name) {
+      if(name != '' && name != null) {
+        this.name = name;
+        loggedIn = true;
+      }
+    },
+    getLoginName: function() {
+      return name;
+    },
+    getLoginStatus: function() {
+      return false;
+    }
+  };
+});

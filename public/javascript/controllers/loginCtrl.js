@@ -1,5 +1,5 @@
 // Login Controller
-app.controller('loginCtrl', function($scope, $routeParams, $http, $window) {
+app.controller('loginCtrl', function($scope, $routeParams, $http, $window, loginService) {
   $scope.name = 'loginCtrl';
   $scope.params = $routeParams;
   $scope.loggedin = false;
@@ -13,6 +13,7 @@ app.controller('loginCtrl', function($scope, $routeParams, $http, $window) {
     if(res){
       $scope.loggedin = true;
       $scope.heading = 'Hello, ' + res.data[0].name;
+      loginService.setLoggedIn(res.data[0].name);
     } else {
       $scope.loggedin = false;
       console.log("nothing");

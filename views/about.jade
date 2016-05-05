@@ -3,7 +3,7 @@ header.about
   p Here's what you've searched for this far.
 section(id='mealLog')
   h3 Recently Added
-  button(class='aboutbtn' ng-click='getHistory()') Load history
+  // button(class='aboutbtn' ng-click='getHistory()') Load history
   ul
     li(ng-repeat='val in mealinfo | limitTo:5:-5')
       | Meal: {{ val.food}} 
