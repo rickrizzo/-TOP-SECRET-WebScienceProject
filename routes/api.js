@@ -86,12 +86,13 @@ router.get('/add_list/:list/:food_id', function(req, res, next) {
 
 router.get('/get_list', function(req, res, next) {
   var list_name = req.query.lname;
-  //console.log(req.query.lname);
-  console.log(req.cookies.user);
-  var hold = listCtrl.findOrCreate({user_id: "572a5023376aa7e0190a2cd4"});
-  //console.log(hold);
-  res.send(hold);
   
+  //console.log(req.cookies.user);
+  //var hold = listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
+  hold = listCtrl.showAllLists({user_id: "572a5023376aa7e0190a2cd4"});
+  res.send(hold);
+  //console.log(hold);
+
 });
 
 router.post('/create_list', function(req, res, next) {

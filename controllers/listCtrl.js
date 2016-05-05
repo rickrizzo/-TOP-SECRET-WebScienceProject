@@ -4,7 +4,7 @@ var userCtrl = require('./userCtrl');
 
 module.exports = {
 	findOrCreate: function(req, res){	
-		listModel.findOne({'user_id': req.user_id},function(err, found){
+		listModel.findOne({'name':req.name, 'user_id': req.user_id},function(err, found){
 			if(err){
 				return null;
 			} else{
@@ -13,7 +13,7 @@ module.exports = {
 				}else{
 					var list = new listModel({
 						user_id: req.user_id,
-						name: "TestList",
+						name: req.name,
 						items: []
 					});
 					userCtrl.addList({list_id: req.name, user_id: req.user_id});
@@ -37,12 +37,12 @@ module.exports = {
 		});
 	},
 	showAllLists: function(req, res){
-		listModel.find({'user_id': req.user_id}, function(err, lists){
-			var allLists = {}
-			lists.forEach(function(list){
-				allLists[list._id] = list;
-			});
-			res.send(allLists);
+		listModel.find({'user_id': req.user_id}).toArray( function(err, lists){
+			//var allLists = {}
+			//lists.forEach(function(list){
+				//allLists[list._id] = list;
+			//});
+			return list;
 		});
 	},
 	delete: function(req,res){
