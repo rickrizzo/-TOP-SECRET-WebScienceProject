@@ -16,14 +16,15 @@ app.service('loginService', function() {
   var loggedIn = false;
   var name = '';
   return {
-    setLoginStatus: function(name) {
+    setLoginStatus: function(_name) {
       if(name != '' && name != null) {
-        this.name = name;
+        this.name = _name;
+        console.log(_name);
         loggedIn = true;
       }
     },
     getLoginName: function() {
-      return name;
+      return this.name;
     },
     getLoginStatus: function() {
       return false;

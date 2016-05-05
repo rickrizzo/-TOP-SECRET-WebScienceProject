@@ -13,7 +13,7 @@ app.controller('loginCtrl', function($scope, $routeParams, $http, $window, login
     if(res){
       $scope.loggedin = true;
       $scope.heading = 'Hello, ' + res.data[0].name;
-      loginService.setLoggedIn(res.data[0].name);
+      loginService.setLoginStatus(res.data[0].name);
     } else {
       $scope.loggedin = false;
       console.log("nothing");

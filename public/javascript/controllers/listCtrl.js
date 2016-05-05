@@ -1,11 +1,13 @@
 // List Page Controller
-app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
+app.controller('listCtrl', function($scope, $routeParams, $http, listService, loginService) {
   
   // Page Details
   $scope.reset = {title: ' '};
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = listService.getEntries();
+  $scope.loggedIn = loginService.getLoginStatus();
+  //console.log(loginService.getLoginStatus());
   $scope.recommended_nutrition = {"Energy": 2600, "Sugar": 60, "Fat": 55, "Carbohydrates": 225, "Fiber": 31.5};  
 
   // Clear Query

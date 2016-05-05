@@ -6,7 +6,7 @@ module.exports = {
 			if(err){
 				return err;
 			} else{
-				if(found){
+				if(found && res){
 					return res.send(JSON.stringify(found));
 				}else if(req.nutrition) {
 					var item = new itemModel({
