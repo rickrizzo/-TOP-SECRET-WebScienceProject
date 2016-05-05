@@ -1,8 +1,8 @@
 // List Page Controller
-app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anchorScroll, listService) {
+app.controller('listCtrl', function($scope, $routeParams, $http, listService) {
   
   // Page Details
-  $anchorScroll.yOffset = 400;
+  $scope.reset = {title: ' '};
   $scope.name = 'listCtrl';
   $scope.params = $routeParams;
   $scope.groceryList = listService.getEntries();
@@ -28,7 +28,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anc
     $scope.entries.length = 0;
     var food = $scope.query.text;
     var tmp = []
-    $location.hash('results');
 
     // Add Items
   	$http.get('/api/get_food/' + food).then(function(response) {
@@ -41,7 +40,6 @@ app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anc
           amount: 0
         });
       }
-      $anchorScroll();
     }, function(response) {
       $scope.noresults = true;
     });
@@ -49,6 +47,11 @@ app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anc
 
   // Add Food
   $scope.toggleFood = function(entry) {
+    // Create Grocery List
+    if(!$scope.groceryList) {
+      $scope.groceryList = {};
+    }
+
     // Entry in Grocery List
     if(entry.id in $scope.groceryList) {
       entry.amount = 0;
@@ -74,7 +77,7 @@ app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anc
 
           // Check Input
           for(var elm in entry.nutrition){
-            if(isNaN(entry.nutrition[elm])) {
+            if(isNaN(entry.nutrition[elm]) || entry.nutrition[elm] == undefined) {
               entry.nutrition[elm] = 0;
             }
           }
@@ -97,7 +100,10 @@ app.controller('listCtrl', function($scope, $routeParams, $http, $location, $anc
 
   // In Grocery List
   $scope.inGroceryList = function(entry) {
-    if(entry.id in $scope.groceryList) {
+    if(!$scope.groceryList) {
+      return false;
+    }
+     else if(entry.id in $scope.groceryList) {
       return true;
     }
     return false;
