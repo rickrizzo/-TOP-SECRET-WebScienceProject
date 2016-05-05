@@ -220,7 +220,8 @@ ul.legend li {
       #summary #foodList ul li button {
         position: relative;
         right: 0;
-        padding: 0 1em; }
+        padding: 0 1em;
+        z-index: -1; }
         @media (min-width: 768px) {
           #summary #foodList ul li button {
             padding: 0 0.5em; } }
@@ -241,6 +242,7 @@ section#mealLog {
         width: 280px;
         margin: 0 1em;
         float: left;
+        height: 150px;
         display: inline; }
         section#mealLog article div hr {
           display: none; } }
