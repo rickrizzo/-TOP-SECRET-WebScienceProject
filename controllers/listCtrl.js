@@ -3,6 +3,7 @@ var itemCtrl = require('./itemCtrl');
 var userCtrl = require('./userCtrl');
 
 module.exports = {
+	// return an existing list or create a new one
 	findOrCreate: function(req, res){	
 		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
 			if(!res) {
@@ -31,6 +32,7 @@ module.exports = {
 			
 		});
 	},
+	// add an item to the list
 	addItem: function(req, res){
 		this.findOrCreate({'name':req.name, 'user_id': req.user_id}, res);
 		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
@@ -44,6 +46,7 @@ module.exports = {
 			}
 		});
 	},
+	// return all lists for a user
 	showAllLists: function(req, res){
 		listModel.find({'user_id': req.user_id}, function(err, lists){
 			var allLists = {}
@@ -53,6 +56,7 @@ module.exports = {
 			res.send(JSON.stringify(allLists));
 		});
 	},
+	// delete a list
 	delete: function(req,res){
 		listModel.remove({
 			'name' : req.name,
