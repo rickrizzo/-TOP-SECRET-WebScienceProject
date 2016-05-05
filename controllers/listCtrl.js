@@ -5,9 +5,8 @@ var userCtrl = require('./userCtrl');
 module.exports = {
 	findOrCreate: function(req, res){	
 		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
-			var hold;
 			if(err){
-				//return "this is not wokring";
+				return err;
 			} else{
 				if(found){
 					hold = found.items;
@@ -21,7 +20,7 @@ module.exports = {
 					});
 					userCtrl.addList({list_id: req.name, user_id: req.user_id});
 					list.save(function(err, newlist){
-						hold = newlist;
+						if(err) return err;
 						if(res) return res.send(JSON.stringify(newlist));
 					});	
 				}
