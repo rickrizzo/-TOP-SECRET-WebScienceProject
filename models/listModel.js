@@ -6,6 +6,7 @@ var itemModel = require('./itemModel');
 var listSchema = new Schema({
 	"list_id": ObjectId,
 	"user_id": String,
+	"created": Date,
 	"name": String,
 	"items": []
 });
