@@ -166,7 +166,7 @@ form {
 		right: 10px;
 	}
 	input {
-		border: white 1px solid;
+		border: white 1px solid !important;
 		line-height: 2em;
 		&:focus {
 			outline: none;
@@ -174,14 +174,14 @@ form {
 		&[type=text] {
 			box-sizing: border-box;
 			font-size: 1em;
-			width: 16em;
+			width: 10em;
 			@media (min-width: $tablet) {
 				width: 20em;
 			}
 		}
 		&[type=reset] {
-			background-color: white;
-			border: none;
+			background-color: white !important;
+			border: none !important;
 			padding: 0;
 			position: relative;
 			left: -20px;

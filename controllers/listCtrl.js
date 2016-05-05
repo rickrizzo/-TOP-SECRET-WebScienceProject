@@ -4,13 +4,13 @@ var userCtrl = require('./userCtrl');
 
 module.exports = {
 	findOrCreate: function(req, res){	
-		listModel.findOne({'name':req.name, 'user_id': req.user_id}).lean().exec(function(err, found){
-			var hold;
+		listModel.findOne({'name':req.name, 'user_id': req.user_id}, function(err, found){
 			if(err){
-				//return "this is not wokring";
+				return err;
 			} else{
 				if(found){
-					return res.send(JSON.stringify(found));
+					hold = found.items;
+					if(res) return res.send(JSON.stringify(found));
 				}else{
 					var list = new listModel({
 						user_id: req.user_id,
@@ -20,7 +20,8 @@ module.exports = {
 					});
 					userCtrl.addList({list_id: req.name, user_id: req.user_id});
 					list.save(function(err, newlist){
-						return res.send(JSON.stringify(newlist));
+						if(err) return err;
+						if(res) return res.send(JSON.stringify(newlist));
 					});	
 				}
 			}

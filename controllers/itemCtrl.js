@@ -8,7 +8,7 @@ module.exports = {
 			} else{
 				if(found){
 					return res.send(JSON.stringify(found));
-				}else{
+				}else if(req.nutrition) {
 					var item = new itemModel({
 						api_id: req.api_id,
 						name: req.nutrition.name,
@@ -25,8 +25,10 @@ module.exports = {
 						if(err){
 							return err;
 						}
-						return res.send(JSON.stringify(newitem));
+						if(res) return res.send(JSON.stringify(newitem));
 					});	
+				} else{
+					if(res) return res.send(JSON.stringify(found));
 				}
 			}
 		});

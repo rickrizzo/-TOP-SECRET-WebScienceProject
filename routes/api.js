@@ -74,12 +74,18 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
         }
       }
       res.send(return_data);
-      itemCtrl.findOrCreate({api_id: food, nutrition: return_data}, res);
+      itemCtrl.findOrCreate({api_id: food, nutrition: return_data});
     }
     else {
       console.log("Error in get_nutrition: " + error);
     }
   });
+});
+
+
+router.get('/get_item/:id', function(req, res, next){
+  var api_id = req.params.id;
+  itemCtrl.findOrCreate({api_id: api_id}, res);
 });
 
 router.get('/add_list/:list/:food_id', function(req, res, next) {
@@ -88,30 +94,13 @@ router.get('/add_list/:list/:food_id', function(req, res, next) {
   listCtrl.addItem({name: list, api_id: food_id, user_id: req.cookies.user}, res);
 });
 var hold = [];
-router.get('/get_list', function(req, res, next) {
-  //var list_name = req.query.lname;
-  
-  //console.log(req.cookies.user);
-  //var hold = listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
-  //console.log("barbies");
-  listCtrl.findOrCreate({name: "TestList", user_id: "10206777015289368"}, function(err, result){
-
-    console.log(result);
-  });
-  
-
-  //console.log(hold);
-  //res.send(hold);
-  //console.log(hold);
-});
-
-router.get('/get_list/:list', function(req, res, next) {
-  var list_name = req.params.list;
-  listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user},res);
-});
 
 router.get('/show_lists', function(req, res,next){
   listCtrl.showAllLists({user_id: req.cookies.user}, res);
+});
+
+router.get('/get_list', function(req, res, next) {
+  listCtrl.findOrCreate({name: "TestList", user_id: req.cookies.user},res);
 });
 
 router.post('/create_list', function(req, res, next) {
