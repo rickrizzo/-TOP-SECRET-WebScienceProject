@@ -9,7 +9,7 @@ module.exports = {
 				return null;
 			} else{
 				if(found){
-					return JSON.stringfy(found);
+					return found;
 				}else{
 					var list = new listModel({
 						user_id: req.user_id,
