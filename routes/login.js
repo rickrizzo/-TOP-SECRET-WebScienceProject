@@ -14,7 +14,7 @@ passport.use(new FacebookStrategy({
     // clientID: '176656516048298',
     // clientSecret: 'ce8c2e497fe9da446b6ddfd284dcb26e',
     // callbackURL: "http://grogro.herokuapp.com/fb_login/auth/facebook/callback"
-        clientID: '225676544479628',
+    clientID: '225676544479628',
     clientSecret: '3f8786e6f9bff4d451194146869ff2a8',
     callbackURL: "http://localhost:3000/fb_login/auth/facebook/callback"
   },
