@@ -90,10 +90,17 @@ router.get('/get_list', function(req, res, next) {
   //console.log(req.cookies.user);
   //var hold = listCtrl.findOrCreate({name: list_name, user_id: req.cookies.user});
   //console.log("barbies");
-  hold = listCtrl.showAllLists({user_id: "572a5023376aa7e0190a2cd4"});
+  listCtrl.findOrCreate({name: "TestList", user_id: "572a5023376aa7e0190a2cd4"}, function(err, pass){
+    if(err){
+      console.log(err);
+    }else{
+      console.log(pass)
+    }
+
+  });
   
-  console.log(hold);
-  res.send(hold);
+  //console.log(hold);
+  //res.send(hold);
   //console.log(hold);
 
 });

@@ -9,7 +9,7 @@ module.exports = {
 				return null;
 			} else{
 				if(found){
-					return found;
+					return JSON.stringfy(found);
 				}else{
 					var list = new listModel({
 						user_id: req.user_id,
@@ -38,18 +38,12 @@ module.exports = {
 		});
 	},
 	showAllLists: function(req, res){
-		listModel.find({'user_id': req.user_id}).toArray( function(err, lists){
-			if(err){
-				var pass = [1,2,3,4];
-				return pass;
-			}else{
-				return lists;
-			}
-			//var allLists = {}
-			//lists.forEach(function(list){
-				//allLists[list._id] = list;
-			//});
-			
+		listModel.find({'user_id': req.user_id}, function(err, lists){
+			var allLists = {}
+			lists.forEach(function(list){
+				allLists[list._id] = list;
+			});
+			res.send(allLists);
 		});
 	},
 	delete: function(req,res){
