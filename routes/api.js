@@ -9,7 +9,7 @@ var apikeys = ['c7cIi88CYsXPaT1sxqhLSLz2OaROEEOdjFFHff79', 'BD5eu8hQLzoGG2jmEjkF
 var current_key = 0;
 
 
-// Get Food
+// Get entries from USDA API based on Food String Name
 router.get('/get_food/:food', function(req, res, next) {
   var food = req.params.food;
   var return_data = {};
@@ -19,8 +19,9 @@ router.get('/get_food/:food', function(req, res, next) {
     current_key = 0;
   }
 
+  // make the request to the USDA database
   request('http://api.nal.usda.gov/ndb/search/?format=json&q=' + food + '&sort=r&offset=0&api_key=' + apikeys[current_key], function (error, res1, body) {
-    console.log("Ratelimit Remaining on key " + current_key +": " + res1.caseless.dict["x-ratelimit-remaining"]);
+    // cycle through API keys if one is expired
     if (res1.caseless.dict["x-ratelimit-remaining"] <= 20) {
       if (current_key == apikeys.length - 1) {
         current_key = 0;
@@ -30,6 +31,7 @@ router.get('/get_food/:food', function(req, res, next) {
       }
     }
 
+    // return the data we care about - name and id
     if (!error && res1.statusCode == 200) {
       data = JSON.parse(res1.body);
       for (var item in data.list.item) {
@@ -44,13 +46,16 @@ router.get('/get_food/:food', function(req, res, next) {
   });
 });
 
+// gets nutrition information from USDA based on food ID
 router.get('/get_nutrition/:food_id', function(req, res, next) {
   var food = req.params.food_id;
+  // nutrition information we care about
   var interested = ["Energy", "Sugars, total", "Total lipid (fat)", "Carbohydrate, by difference", "Fiber, total dietary"];
   var return_data = {};
 
+  // make the request to the USDA database
   request('http://api.nal.usda.gov/ndb/reports/?ndbno=' + food + '&type=b&format=json&api_key=' + apikeys[current_key], function(error, res2, body) {
-    console.log("Ratelimit Remaining on key " + current_key +": " + res2.caseless.dict["x-ratelimit-remaining"]);
+    // cycle through API keys if one is expired
     if (res2.caseless.dict["x-ratelimit-remaining"] <= 20) {
       if (current_key == apikeys.length - 1) {
         current_key = 0;
@@ -64,6 +69,7 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
       data = JSON.parse(res2.body);
       var nutrients = data.report.food["nutrients"];
       return_data["name"] = data.report.food.name;
+      // go through nutrition and only return data we care about
       for (var item in nutrients) {
         if (interested.indexOf(nutrients[item]["name"]) != -1) {
           if(nutrients[item]["measures"].length <= 0) {
@@ -82,12 +88,13 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
   });
 });
 
-
+// gets an item from the database
 router.get('/get_item/:id', function(req, res, next){
   var api_id = req.params.id;
   itemCtrl.findOrCreate({api_id: api_id}, res);
 });
 
+// adds an item to a food list in the database
 router.get('/add_list/:list/:food_id', function(req, res, next) {
   var food_id = req.params.food_id;
   var list = req.params.list;
@@ -95,14 +102,17 @@ router.get('/add_list/:list/:food_id', function(req, res, next) {
 });
 var hold = [];
 
+// shows a users lists
 router.get('/show_lists', function(req, res,next){
   listCtrl.showAllLists({user_id: req.cookies.user}, res);
 });
 
+// gets a users list
 router.get('/get_list', function(req, res, next) {
   listCtrl.findOrCreate({name: "TestList", user_id: req.cookies.user},res);
 });
 
+// creates a list and initializes it with food entries
 router.post('/create_list', function(req, res, next) {
   var list = req.body.list;
   var name = req.body.name;
@@ -116,11 +126,7 @@ router.post('/create_list', function(req, res, next) {
   res.send('added list to db');
 });
 
-router.get('/update_list/:list', function(req, res, next) {
-  var list = req.params.list;
-  res.send('updates a users list');
-});
-
+// deletes a users list
 router.get('/del_list/:list', function(req, res, next) {
   var list = req.params.list;
   listCtrl.delete({name: list_name, user_id: req.cookies.user});
