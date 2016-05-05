@@ -10,7 +10,9 @@
   * Search Results
   * Results Chart
   * Nutrition Data
+  * Food List
   * Home Page
+  * Meal Log
 */
 
 // Dimentions
@@ -135,8 +137,14 @@ button {
 	border: none;
 	line-height: 2em;
 	font-size: 1em;
-	&:hover {
+	&.listbtn:hover {
 		color: $lists;
+	}
+	&.aboutbtn:hover {
+		color: $about;
+	}
+	&.loginbtn:hover {
+		color: $login;
 	}
 	&:focus {
 		outline: 0;
@@ -153,6 +161,10 @@ form {
 			padding-top: 0.75em;
 		}
 	}
+	button {
+		position: relative;
+		right: 10px;
+	}
 	input {
 		border: white 1px solid;
 		line-height: 2em;
@@ -166,6 +178,14 @@ form {
 			@media (min-width: $tablet) {
 				width: 20em;
 			}
+		}
+		&[type=reset] {
+			background-color: white;
+			border: none;
+			padding: 0;
+			position: relative;
+			left: -20px;
+			font-size: 1em;
 		}
 	}
 }
@@ -211,7 +231,7 @@ section#summary {
 div.chart {
   max-width: 1000px;
   width: auto;
-  height: 800px;
+  height: 700px;
   overflow: auto;
   svg {
     display: block;
@@ -221,6 +241,9 @@ div.chart {
 		float: right;
 		height: 400px;
 	}
+  li {
+  	text-align: left;
+  }
 }
 
 path.slice{
@@ -234,17 +257,19 @@ polyline{
   fill: none;
 }
 
+
+// Nutrition Data
 ul.legend {
 	li {
-	  font-size: 2em;
+	  font-size: 1.5em;
   	&.energy {
 		  color: #B30000;
 		}
 		&.carb {
-			color: #E34A33;
+			color: #FCCC8A;
 		}
 		&.fat {
-			color: #FCCC8A;
+			color: #E34A33;
 		}
 		&.sugar {
 			color: #FDCC8A;
@@ -261,7 +286,36 @@ ul.legend {
 	@media (min-width: $tablet) {
 		float: right;
 		li p {
-			font-size: 0.5em;
+			font-size: 0.75em;
+		}
+	}
+}
+
+// Food List
+#summary {
+	margin: 0 1em;
+	text-align: center;
+	#foodList {
+		button {
+			font-size: 1.2em;
+		}
+		ul {
+			text-align: left;
+			list-style: none;
+			li {
+				margin-bottom: 1em;
+				button:last-child{
+					margin-right: 1em;
+				}
+				button {
+					position: relative;
+					right: 0;
+					padding:  0 1em;
+					@media (min-width: $tablet) {
+						padding: 0 0.5em;
+					}
+				}
+			}
 		}
 	}
 }
@@ -270,4 +324,10 @@ ul.legend {
 // Home Page
 article {
 	margin: 0 1em;
+}
+
+// Meal Log
+section#mealLog {
+	margin: 0 1em;
+	text-align: center;
 }

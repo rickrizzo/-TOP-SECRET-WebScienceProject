@@ -66,7 +66,11 @@ router.get('/get_nutrition/:food_id', function(req, res, next) {
       return_data["name"] = data.report.food.name;
       for (var item in nutrients) {
         if (interested.indexOf(nutrients[item]["name"]) != -1) {
-          return_data[nutrients[item]["name"]] = nutrients[item]["measures"][0]["value"];
+          if(nutrients[item]["measures"].length <= 0) {
+            return_data[nutrients[item]["name"]] = nutrients[item]["value"];
+          } else {
+            return_data[nutrients[item]["name"]] = nutrients[item]["measures"][0]["value"];
+          }
         }
       }
       res.send(return_data);
