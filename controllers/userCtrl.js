@@ -1,6 +1,7 @@
 var userModel = require('../models/userModel');
 
 module.exports = {
+	// return an existing user or create a new one
 	findOrCreate: function(req, res){	
 		userModel.findOne({'fb_id':req.profile.id},function(err, found){
 			if(err){
@@ -22,6 +23,7 @@ module.exports = {
 			}
 		});
 	},
+	// add a list to a user's lists array
 	addList: function(req, res){
 		userModel.findOne({'fb_id':req.user_id}, function(err, found){
 			if(found){
@@ -30,6 +32,7 @@ module.exports = {
 			}
 		});
 	},
+	// delete a user
 	delete: function(req,res){
 		userModel.remove({
 			'_id' : req.params.user_id

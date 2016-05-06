@@ -1,6 +1,7 @@
 var itemModel = require('../models/itemModel');
 
 module.exports = {
+	// return an existing item or create a new one
 	findOrCreate: function(req, res){	
 		itemModel.findOne({'api_id':req.api_id},function(err, found){
 			if(err){
@@ -33,6 +34,7 @@ module.exports = {
 			}
 		});
 	},
+	// delete an item
 	delete: function(req,res){
 		itemModel.remove({
 			'item_id' : req.item_id
